@@ -31,13 +31,13 @@ First, generate a Vagrant box file:
 ```
 # change working directory to any specific OS;
 # for example, "debian-jessie"
-$ cd debian-jessie
+cd debian-jessie
 
 # build it!
-$ ./build.sh
+./build.sh
 
 # if successful, you'll get an 'output.box' file
-$ ls -al
+ls -al
 ```
 
 
@@ -45,12 +45,15 @@ Then, you can use the generated box file as follows:
 
 ```
 # give it a local name (e.g., "my-jessie64")
-$ vagrant box add  --name my-jessie64  output.box
+vagrant box add  --name my-jessie64  output.box
 
 # now you'll see the box installed locally
-$ vagrant box list
+vagrant box list
 
 ```
+
+For live demo, see [Building a Docker-enabled Vagrant box for Debian jessie x86_64](https://asciinema.org/a/10603).
+
 
 
 ## License
