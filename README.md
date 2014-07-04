@@ -4,18 +4,26 @@ Docker-enabled Vagrant boxes
 
 ## Purpose
 
-Some Linux distributions don't have [Docker](http://www.docker.com) engine pre-installed. Public Vagrant boxes (e.g., [Vagrant Cloud](https://vagrantcloud.com/) and [Vagrantbox.es](http://www.vagrantbox.es/)) also lack quality support for Docker. So I build these Vagrant boxes to aid my Docker development.
+Some Linux distributions don't have a pre-installed [Docker](http://www.docker.com) engine. Public Vagrant boxes (e.g., those in [Vagrant Cloud](https://vagrantcloud.com/) and [Vagrantbox.es](http://www.vagrantbox.es/)) also lack quality support for Docker. So I build these Vagrant boxes to aid my Docker development.
 
 
 ## For impatient
 
 Use the following public box names (all available from [Vagrant Cloud](https://vagrantcloud.com/)):
 
-- [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker): Debian jessie x64
+- Debian jessie x64: [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker) 
 
-- (TODO) Ubuntu 14.04 LTS ("Trusty") x64
+- Ubuntu 14.04 LTS ("Trusty") x64:
 
-- (TODO) CentOS 6.5 x64
+  - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker)
+  
+  - [`3scale/docker`](https://vagrantcloud.com/3scale/docker), a nice alternative.
+
+- CentOS 6.5 x64:
+
+  - (TODO) williamyeh/centos65-docker
+
+  - [`jdiprizio/centos-docker-io`](https://vagrantcloud.com/jdiprizio/centos-docker-io), a nice alternative.
 
 
 
@@ -23,7 +31,9 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 ## Build these boxes yourself
 
-Currently, Vagrant Cloud doesn't have a *automated build*  mechanism as in the [Docker Hub](https://hub.docker.com/) ecosystem. If you don't trust Vagrant Cloud, therefore, you can build these boxes as follows.
+Currently, Vagrant Cloud doesn't have an *automated build*  mechanism as in the [Docker Hub](https://hub.docker.com/) ecosystem. You might not trust those boxes I've put into Vagrant Cloud; you might want more up-to-date packages in the box.
+
+OK, you can build these boxes as follows.
 
 First, generate a Vagrant box file:
 
