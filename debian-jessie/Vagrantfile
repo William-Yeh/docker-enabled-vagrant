@@ -4,10 +4,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box     = "jessie64"
-  config.vm.box_url = "https://downloads.sourceforge.net/project/vagrantboxjessie/debian80.box"
+  # Packer source: https://github.com/pjkundert/cpppo
+  config.vm.box = "cpppo-jessie-64"
+  config.vm.box_url = "http://box.hardconsulting.com/jessie64-virtualbox.box"
 
-  config.vm.provision :shell, :path => "vagrant-provision.sh"
+  #config.vm.provision :shell, :path => "vagrant-provision.sh"
 
 end

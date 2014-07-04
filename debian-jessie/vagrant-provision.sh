@@ -17,20 +17,9 @@ export LC_ALL=en_US.UTF-8
 # fix base box
 #
 
-# fix apt source
-sudo apt-get clean
-sudo rm -rf /var/lib/apt/lists/*
-
-sudo cat <<APT_END  > /etc/apt/sources.list
-deb http://http.debian.net/debian jessie         main contrib non-free
-deb http://http.debian.net/debian jessie-updates main contrib non-free
-deb http://security.debian.org    jessie/updates main contrib non-free
-APT_END
-
 # update packages
 sudo apt-get update
-#sudo apt-get -y -q install virtualbox-guest-utils virtualbox-guest-dkms
-#sudo apt-get -y -q upgrade
+sudo apt-get -y -q upgrade
 #sudo apt-get -y -q dist-upgrade
 
 
@@ -72,7 +61,7 @@ sudo dd if=/dev/zero of=/EMPTY bs=1M
 sudo rm -f /EMPTY
 
 
-rm -f /home/vagrant/.bash_history
+rm -f /home/vagrant/.bash_history  /var/mail/vagrant
 
 cat <<EOF  >> /home/vagrant/.bashrc
 export LC_CTYPE=C.UTF-8
