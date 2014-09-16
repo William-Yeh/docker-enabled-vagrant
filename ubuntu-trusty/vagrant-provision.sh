@@ -77,7 +77,12 @@ sudo rm -f /EMPTY
 
 rm -f /home/vagrant/.bash_history
 
+sudo cat <<HOSTNAME > /etc/hostname
+localhost
+HOSTNAME
+
 cat <<EOF  >> /home/vagrant/.bashrc
+export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
 export LC_CTYPE=C.UTF-8
 lsb_release -a
 EOF
