@@ -5,7 +5,6 @@
 # [NOTE] run by Vagrant; never run on host OS. 
 #
 # @see https://docs.docker.com/installation/debian/
-# @see https://github.com/jpetazzo/nsenter
 # 
 
 
@@ -33,13 +32,33 @@ sudo apt-get update
 # install Docker
 curl -sL https://get.docker.io/ | sudo sh
 
-# install nsenter
-# @see https://github.com/jpetazzo/nsenter
-sudo docker run -v /usr/local/bin:/target jpetazzo/nsenter
+
+# install Fig
+# @see http://www.fig.sh/install.html
+curl -o fig -L https://github.com/docker/fig/releases/download/1.0.0/fig-`uname -s`-`uname -m` 
+chmod a+x fig
+sudo mv fig /usr/local/bin
+
+
+# install Pipework
+# @see https://github.com/jpetazzo/pipework
+curl -o pipework -L https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
+chmod a+x pipework
+sudo mv pipework /usr/local/bin
+
+
+# install docker-gen
+# @see https://github.com/jwilder/docker-gen
+curl -o docker-gen.tar.gz -L https://github.com/jwilder/docker-gen/releases/download/0.3.4/docker-gen-linux-amd64-0.3.4.tar.gz
+tar xvzf docker-gen.tar.gz
+sudo chown root docker-gen
+sudo chgrp root docker-gen
+sudo mv docker-gen /usr/local/bin
+rm *.tar.gz
+
 
 # clean up
 sudo docker rm `sudo docker ps --no-trunc -a -q`
-sudo docker rmi jpetazzo/nsenter
 sudo docker rmi busybox
 sudo apt-get clean
 sudo rm -f \

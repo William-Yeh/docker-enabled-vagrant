@@ -26,6 +26,17 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
   - [`jdiprizio/centos-docker-io`](https://vagrantcloud.com/jdiprizio/centos-docker-io), a nice alternative.
 
 
+## Included software
+
+- Docker Engine
+
+- Docker CLI
+
+- [Fig](http://www.fig.sh/): Fast, isolated development environments using Docker.
+
+- [Pipework](https://github.com/jpetazzo/pipework)
+
+- [docker-gen](https://github.com/jwilder/docker-gen)
 
 
 
@@ -68,6 +79,6 @@ For live demo, see [Building a Docker-enabled Vagrant box for Debian jessie x86_
 
 ## License
 
-Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT license](http://creativecommons.org/licenses/MIT/).
+Licensed under [MIT license](http://creativecommons.org/licenses/MIT/).
 
 Copyright © 2013+ William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).
