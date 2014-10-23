@@ -38,6 +38,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [docker-gen](https://github.com/jwilder/docker-gen)
 
+- [dockerize](https://github.com/jwilder/dockerize)
 
 
 ## Build these boxes yourself

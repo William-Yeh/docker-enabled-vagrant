@@ -57,6 +57,16 @@ sudo mv docker-gen /usr/local/bin
 rm *.tar.gz
 
 
+# install dockerize
+# @see https://github.com/jwilder/dockerize
+curl -o dockerize.tar.gz -L https://github.com/jwilder/dockerize/releases/download/v0.0.1/dockerize-linux-amd64-v0.0.1.tar.gz
+sudo -xzvf dockerize.tar.gz
+sudo chown root dockerize
+sudo chgrp root dockerize
+sudo mv dockerize /usr/local/bin
+rm *.tar.gz
+
+
 # clean up
 sudo docker rm `sudo docker ps --no-trunc -a -q`
 sudo docker rmi busybox
