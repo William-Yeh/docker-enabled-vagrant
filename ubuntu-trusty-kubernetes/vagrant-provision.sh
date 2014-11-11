@@ -65,6 +65,9 @@ DEBIAN_FRONTEND=noninteractive \
 # install Kubernetes 
 #
 
+DEBIAN_FRONTEND=noninteractive \
+    sudo apt-get install -y net-tools
+
 cd /opt
 git clone $KUBERNETES_GIT
 cd kubernetes
