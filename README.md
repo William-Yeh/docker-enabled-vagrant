@@ -6,17 +6,21 @@ Docker-enabled Vagrant boxes
 
 Some Linux distributions don't have a pre-installed [Docker](http://www.docker.com) engine. Public Vagrant boxes (e.g., those in [Vagrant Cloud](https://vagrantcloud.com/) and [Vagrantbox.es](http://www.vagrantbox.es/)) also lack quality support for Docker. So I build these Vagrant boxes to aid my Docker development.
 
+I also install some handy tools for Docker.
+
 
 ## For impatient
 
 Use the following public box names (all available from [Vagrant Cloud](https://vagrantcloud.com/)):
 
-- Debian jessie x64: [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker) 
+- Debian jessie x64: [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker)
 
 - Ubuntu 14.04 LTS ("Trusty") x64:
 
   - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker)
-  
+
+  - [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes), basically `williamyeh/ubuntu-trusty64-docker` + Kubernetes
+
   - [`3scale/docker`](https://vagrantcloud.com/3scale/docker), a nice alternative.
 
 - CentOS 6.5 x64:
@@ -39,6 +43,8 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 - [docker-gen](https://github.com/jwilder/docker-gen)
 
 - [dockerize](https://github.com/jwilder/dockerize)
+
+- [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box)
 
 
 ## Build these boxes yourself
