@@ -1,6 +1,7 @@
 #!/bin/bash
 
-BOX_FILE=output.box
+readonly BOX_FILE=debian-jessie64-docker.box
+#readonly BOX_FILE=output.box
 
 
 vagrant halt

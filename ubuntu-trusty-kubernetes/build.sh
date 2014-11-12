@@ -1,6 +1,7 @@
 #!/bin/bash
 
-BOX_FILE=output.box
+readonly BOX_FILE=ubuntu-trusty64-kube.box
+#readonly BOX_FILE=output.box
 
 
 vagrant halt

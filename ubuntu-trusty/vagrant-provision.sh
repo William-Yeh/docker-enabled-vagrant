@@ -13,6 +13,16 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
+
+readonly FIG_VERSION=1.0.1
+
+readonly DOCKERGEN_VERSION=0.3.5
+readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
+
+readonly DOCKERIZE_VERSION=v0.0.1
+readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+
 #---------------------------------------#
 # fix base box
 #
@@ -46,7 +56,7 @@ sed -i -e \
 
 # install Fig
 # @see http://www.fig.sh/install.html
-curl -o fig -L https://github.com/docker/fig/releases/download/1.0.0/fig-`uname -s`-`uname -m` 
+curl -o fig -L https://github.com/docker/fig/releases/download/$FIG_VERSION/fig-`uname -s`-`uname -m` 
 chmod a+x fig
 sudo mv fig /usr/local/bin
 
@@ -60,7 +70,7 @@ sudo mv pipework /usr/local/bin
 
 # install docker-gen
 # @see https://github.com/jwilder/docker-gen
-curl -o docker-gen.tar.gz -L https://github.com/jwilder/docker-gen/releases/download/0.3.4/docker-gen-linux-amd64-0.3.4.tar.gz
+curl -o docker-gen.tar.gz -L https://github.com/jwilder/docker-gen/releases/download/$DOCKERGEN_VERSION/$DOCKERGEN_TARBALL
 tar xvzf docker-gen.tar.gz
 sudo chown root docker-gen
 sudo chgrp root docker-gen
@@ -70,7 +80,7 @@ rm *.tar.gz
 
 # install dockerize
 # @see https://github.com/jwilder/dockerize
-curl -o dockerize.tar.gz -L https://github.com/jwilder/dockerize/releases/download/v0.0.1/dockerize-linux-amd64-v0.0.1.tar.gz
+curl -o dockerize.tar.gz -L https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/$DOCKERIZE_TARBALL
 sudo -xzvf dockerize.tar.gz
 sudo chown root dockerize
 sudo chgrp root dockerize
@@ -103,7 +113,7 @@ sudo dd if=/dev/zero of=/EMPTY bs=1M
 sudo rm -f /EMPTY
 
 
-rm -f /home/vagrant/.bash_history
+rm -f /home/vagrant/.bash_history  /var/mail/vagrant
 
 sudo cat <<HOSTNAME > /etc/hostname
 localhost

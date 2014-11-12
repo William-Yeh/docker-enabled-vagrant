@@ -57,16 +57,14 @@ rm -rf  $ETCD_VERSION_TAG  etcd.tar.gz
 # @see https://golang.org/doc/install
 #
 
-DEBIAN_FRONTEND=noninteractive \
-    sudo apt-get install -y golang
+sudo apt-get install -y golang
 
 
 #---------------------------------------#
 # install Kubernetes 
 #
 
-DEBIAN_FRONTEND=noninteractive \
-    sudo apt-get install -y net-tools
+sudo apt-get install -y net-tools
 
 cd /opt
 git clone $KUBERNETES_GIT
