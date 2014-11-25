@@ -27,6 +27,10 @@ readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 # fix base box
 #
 
+# disable the warning "Your environment specifies an invalid locale"
+sudo touch /var/lib/cloud/instance/locale-check.skip
+
+
 # update packages
 sudo apt-get update
 #sudo apt-get -y -q upgrade

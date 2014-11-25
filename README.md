@@ -9,7 +9,7 @@ Some Linux distributions don't have a pre-installed [Docker](http://www.docker.c
 I also install some handy tools for Docker.
 
 
-## For impatient
+## For the impatient
 
 Use the following public box names (all available from [Vagrant Cloud](https://vagrantcloud.com/)):
 
