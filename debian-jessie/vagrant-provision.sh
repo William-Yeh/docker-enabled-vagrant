@@ -16,10 +16,10 @@ export LANGUAGE=en_US.UTF-8
 
 readonly FIG_VERSION=1.0.1
 
-readonly DOCKERGEN_VERSION=0.3.5
+readonly DOCKERGEN_VERSION=0.3.6
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
-readonly DOCKERIZE_VERSION=v0.0.1
+readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 

@@ -16,10 +16,10 @@ export LANGUAGE=en_US.UTF-8
 
 readonly FIG_VERSION=1.0.1
 
-readonly DOCKERGEN_VERSION=0.3.5
+readonly DOCKERGEN_VERSION=0.3.6
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
-readonly DOCKERIZE_VERSION=v0.0.1
+readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 
@@ -56,6 +56,20 @@ sed -i -e \
   's/^DEFAULT_FORWARD_POLICY=.+/DEFAULT_FORWARD_POLICY="ACCEPT"/' \
   /etc/default/ufw
 #sudo ufw reload
+
+
+#
+# override "insecure-registry" error for private registry to ease testing
+# @see http://stackoverflow.com/a/27163607/714426
+#
+cat << EOF_REGISTRY >> /etc/default/docker
+
+# allow HTTP access to private registry "registry.com"
+DOCKER_OPTS="--insecure-registry registry.com"
+#DOCKER_OPTS="--insecure-registry 10.0.0.0/24 --insecure-registry registry.com"
+
+EOF_REGISTRY
+
 
 
 # install Fig
