@@ -71,9 +71,10 @@ script
 
     docker run -d  \
         --name docker-registry   \
-        --restart always  \
-        -p 80:5000  \
-        -v $REGISTRY_CONFIG_DIR:/conf  \
+        --restart=always         \
+        -p 80:5000               \
+        -v $REGISTRY_CONFIG_DIR:/conf         \
+        -v $REGISTRY_DBPATH:$REGISTRY_DBPATH  \
         -e DOCKER_REGISTRY_CONFIG=/conf/$REGISTRY_CONFIG_NAME  \
         registry
 
