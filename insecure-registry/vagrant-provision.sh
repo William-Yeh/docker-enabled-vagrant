@@ -63,16 +63,15 @@ cat << EOF_INIT > /etc/init/docker-registry.conf
 description "Docker Registry"
 
 start on filesystem and started docker
-stop on runlevel [016]
+stop on runlevel [!2345]
 
 respawn
-respawn limit 10 5
 
 script
 
     docker run -d  \
         --name docker-registry   \
-        --restart on-failure:10  \
+        --restart always  \
         -p 80:5000  \
         -v $REGISTRY_CONFIG_DIR:/conf  \
         -e DOCKER_REGISTRY_CONFIG=/conf/$REGISTRY_CONFIG_NAME  \
