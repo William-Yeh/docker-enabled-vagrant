@@ -13,15 +13,18 @@ I also install some handy tools for Docker.
 
 Use the following public box names (all available from [Vagrant Cloud](https://vagrantcloud.com/)):
 
-- Debian jessie x64: [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker)
 
 - Ubuntu 14.04.1 LTS ("Trusty") x64:
 
   - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker)
 
+  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry](https://github.com/docker/docker-registry) - Chef - Puppet
+
   - [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes), basically `williamyeh/ubuntu-trusty64-docker` + Kubernetes
 
   - [`3scale/docker`](https://vagrantcloud.com/3scale/docker), a nice alternative.
+
+- Debian jessie x64: [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker)
 
 - CentOS 6.5 x64:
 
@@ -44,9 +47,9 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [dockerize](https://github.com/jwilder/dockerize)
 
-- [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box)
-
 - [Docker Registry](https://github.com/docker/docker-registry) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
+
+- [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box)
 
 
 ## Build these boxes yourself
