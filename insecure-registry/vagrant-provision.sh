@@ -85,7 +85,6 @@ EOF_INIT
 
 
 # clean up
-sudo docker rm -f `sudo docker ps --no-trunc -a -q`
 sudo apt-get autoremove -y chef puppet
 sudo apt-get clean
 sudo rm -f \
