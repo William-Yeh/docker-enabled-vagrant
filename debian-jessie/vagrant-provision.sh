@@ -54,6 +54,20 @@ sed -i -e \
 #sudo ufw reload
 
 
+#
+# override "insecure-registry" error for private registry to ease testing
+# @see http://stackoverflow.com/a/27163607/714426
+#
+cat << EOF_REGISTRY >> /etc/default/docker
+
+# allow HTTP access to private registry "registry.com"
+DOCKER_OPTS="--insecure-registry registry.com"
+#DOCKER_OPTS="--insecure-registry 10.0.0.0/24 --insecure-registry registry.com"
+
+EOF_REGISTRY
+
+
+
 # install Fig
 # @see http://www.fig.sh/install.html
 curl -o fig -L https://github.com/docker/fig/releases/download/$FIG_VERSION/fig-`uname -s`-`uname -m` 

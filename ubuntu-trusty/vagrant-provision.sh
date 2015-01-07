@@ -109,6 +109,7 @@ rm *.tar.gz
 # clean up
 sudo docker rm `sudo docker ps --no-trunc -a -q`
 sudo docker rmi busybox
+sudo apt-get autoremove -y chef puppet
 sudo apt-get clean
 sudo rm -f \
   /var/log/messages   \

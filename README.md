@@ -16,9 +16,9 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - Ubuntu 14.04.1 LTS ("Trusty") x64:
 
-  - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker)
+  - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker), basically [ubuntu/trusty64](https://vagrantcloud.com/ubuntu/boxes/trusty64) + Docker - Chef - Puppet
 
-  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry](https://github.com/docker/docker-registry) - Chef - Puppet
+  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry](https://github.com/docker/docker-registry)
 
   - [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes), basically `williamyeh/ubuntu-trusty64-docker` + Kubernetes
 
@@ -93,4 +93,4 @@ For live demo, see [Building a Docker-enabled Vagrant box for Debian jessie x86_
 
 Licensed under [MIT license](http://creativecommons.org/licenses/MIT/).
 
-Copyright © 2013+ William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).
+Copyright © 2013-2015 William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).
