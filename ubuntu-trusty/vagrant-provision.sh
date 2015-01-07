@@ -106,9 +106,25 @@ sudo mv dockerize /usr/local/bin
 rm *.tar.gz
 
 
+# install weave
+# @see https://github.com/zettio/weave
+curl -o weave -L https://github.com/zettio/weave/releases/download/latest_release/weave
+sudo chmod a+x  weave
+sudo chown root weave
+sudo chgrp root weave
+sudo mv weave /usr/local/bin
+# preload images
+sudo weave setup
+
+
 # clean up
 sudo docker rm `sudo docker ps --no-trunc -a -q`
-sudo docker rmi busybox
+sudo docker rmi -f busybox
+for SERVICE in "chef-client" "puppet"; do
+    /usr/sbin/update-rc.d -f $SERVICE remove
+    rm /etc/init.d/$SERVICE
+    pkill -9 -f $SERVICE
+done
 sudo apt-get autoremove -y chef puppet
 sudo apt-get clean
 sudo rm -f \

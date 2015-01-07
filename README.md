@@ -47,6 +47,8 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [dockerize](https://github.com/jwilder/dockerize)
 
+- [weave](https://github.com/zettio/weave)
+
 - [Docker Registry](https://github.com/docker/docker-registry) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
 
 - [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box)

@@ -85,7 +85,6 @@ EOF_INIT
 
 
 # clean up
-sudo apt-get autoremove -y chef puppet
 sudo apt-get clean
 sudo rm -f \
   /var/log/messages   \
