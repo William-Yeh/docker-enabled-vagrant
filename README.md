@@ -39,7 +39,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - Docker CLI
 
-- [Fig](http://www.fig.sh/): Fast, isolated development environments using Docker.
+- [Docker Compose](https://github.com/docker/fig) (was: Fig): Fast, isolated development environments using Docker.
 
 - [Pipework](https://github.com/jpetazzo/pipework)
 

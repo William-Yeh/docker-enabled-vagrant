@@ -14,7 +14,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly FIG_VERSION=1.0.1
+readonly FIG_VERSION=1.1.0-rc2
 
 readonly DOCKERGEN_VERSION=0.3.6
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
@@ -72,11 +72,11 @@ EOF_REGISTRY
 
 
 
-# install Fig
+# install Docker Compose (was: Fig)
 # @see http://www.fig.sh/install.html
-curl -o fig -L https://github.com/docker/fig/releases/download/$FIG_VERSION/fig-`uname -s`-`uname -m` 
-chmod a+x fig
-sudo mv fig /usr/local/bin
+curl -o docker-compose -L https://github.com/docker/fig/releases/download/$FIG_VERSION/docker-compose-`uname -s`-`uname -m` 
+chmod a+x docker-compose
+sudo mv docker-compose /usr/local/bin
 
 
 # install Pipework
