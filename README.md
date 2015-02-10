@@ -95,4 +95,4 @@ For live demo, see [Building a Docker-enabled Vagrant box for Debian jessie x86_
 
 Licensed under [MIT license](http://creativecommons.org/licenses/MIT/).
 
-Copyright © 2013-2015 William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).
+Copyright © 2014-2015 William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).
