@@ -14,9 +14,9 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly FIG_VERSION=1.1.0-rc2
+readonly COMPOSE_VERSION=1.1.0
 
-readonly DOCKERGEN_VERSION=0.3.6
+readonly DOCKERGEN_VERSION=0.3.7
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
 readonly DOCKERIZE_VERSION=v0.0.2
@@ -69,8 +69,8 @@ EOF_REGISTRY
 
 
 # install Docker Compose (was: Fig)
-# @see http://www.fig.sh/install.html
-curl -o docker-compose -L https://github.com/docker/fig/releases/download/$FIG_VERSION/docker-compose-`uname -s`-`uname -m` 
+# @see http://docs.docker.com/compose/install/
+curl -o docker-compose -L https://github.com/docker/fig/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` 
 chmod a+x docker-compose
 sudo mv docker-compose /usr/local/bin
 
