@@ -15,6 +15,7 @@ export LANGUAGE=en_US.UTF-8
 
 
 readonly COMPOSE_VERSION=1.1.0
+readonly MACHINE_VERSION=0.1.0
 
 readonly DOCKERGEN_VERSION=0.3.7
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
@@ -74,9 +75,16 @@ EOF_REGISTRY
 
 # install Docker Compose (was: Fig)
 # @see http://docs.docker.com/compose/install/
-curl -o docker-compose -L https://github.com/docker/fig/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` 
+curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` 
 chmod a+x docker-compose
 sudo mv docker-compose /usr/local/bin
+
+
+# install Docker Machine
+# @see https://docs.docker.com/machine/
+curl -o docker-machine -L https://github.com/docker/machine/releases/download/v$MACHINE_VERSION/docker-machine_linux-amd64
+chmod a+x docker-machine
+sudo mv docker-machine /usr/local/bin
 
 
 # install Pipework
@@ -104,6 +112,10 @@ sudo chown root dockerize
 sudo chgrp root dockerize
 sudo mv dockerize /usr/local/bin
 rm *.tar.gz
+
+
+# install swarm
+sudo docker pull swarm
 
 
 # install weave

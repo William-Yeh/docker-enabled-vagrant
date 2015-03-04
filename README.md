@@ -41,6 +41,10 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [Docker Compose](https://github.com/docker/compose) (was: Fig): Fast, isolated development environments using Docker.
 
+- [Docker Swarm](https://github.com/docker/swarm): a Docker-native clustering system.
+
+- [Docker Machine](https://github.com/docker/machine): Machine management for a container-centric world.
+
 - [Pipework](https://github.com/jpetazzo/pipework)
 
 - [docker-gen](https://github.com/jwilder/docker-gen)
