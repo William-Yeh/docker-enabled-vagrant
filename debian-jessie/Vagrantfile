@@ -8,6 +8,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "cpppo-jessie-64"
   config.vm.box_url = "http://box.hardconsulting.com/jessie64-virtualbox.box"
 
+  # avoid possible request "vagrant@127.0.0.1's password:" when "up" and "ssh"
+  config.ssh.password = "vagrant"
+
   config.vm.provision :shell, :path => "vagrant-provision.sh"
 
 end

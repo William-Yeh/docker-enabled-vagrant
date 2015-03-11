@@ -14,7 +14,7 @@ I also install some handy tools for Docker.
 Use the following public box names (all available from [Vagrant Cloud](https://vagrantcloud.com/)):
 
 
-- Ubuntu 14.04.1 LTS ("Trusty") x64:
+- Ubuntu 14.04.2 LTS ("Trusty") x64:
 
   - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker), basically [ubuntu/trusty64](https://vagrantcloud.com/ubuntu/boxes/trusty64) + Docker - Chef - Puppet
 
@@ -60,7 +60,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 ## Build these boxes yourself
 
-Currently, Vagrant Cloud doesn't have an *automated build*  mechanism as in the [Docker Hub](https://hub.docker.com/) ecosystem. You might not trust those boxes I've put into Vagrant Cloud; you might want more up-to-date packages in the box.
+Currently, Atlas (was: Vagrant Cloud) doesn't have an *automated build*  mechanism as in the [Docker Hub](https://hub.docker.com/) ecosystem. You might not trust those boxes I've put into Atlas; you might want more up-to-date packages in the box before I've update them.
 
 OK, you can build these boxes as follows.
 

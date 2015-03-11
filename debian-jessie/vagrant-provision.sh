@@ -17,7 +17,7 @@ export LANGUAGE=en_US.UTF-8
 readonly COMPOSE_VERSION=1.1.0
 readonly MACHINE_VERSION=0.1.0
 
-readonly DOCKERGEN_VERSION=0.3.7
+readonly DOCKERGEN_VERSION=0.3.8
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
 readonly DOCKERIZE_VERSION=v0.0.2
