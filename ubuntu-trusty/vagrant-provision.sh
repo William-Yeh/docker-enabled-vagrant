@@ -23,6 +23,9 @@ readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
+readonly CADVISOR_VERSION=0.10.1
+readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
+
 
 #---------------------------------------#
 # fix base box
@@ -116,6 +119,37 @@ rm *.tar.gz
 
 # install swarm
 sudo docker pull swarm
+
+
+# install cAdvisor
+curl -o /usr/local/bin/cadvisor -L $CADVISOR_EXE_URL
+chmod a+x /usr/local/bin/cadvisor
+docker pull google/cadvisor:latest
+
+cat << EOF_CADVISOR > /etc/init/cadvisor.conf
+description "cAdvisor"
+
+start on filesystem and started docker
+stop on runlevel [!2345]
+
+respawn
+
+# @see https://github.com/google/cadvisor/blob/master/docs/running.md#standalone
+script
+
+    docker run  \
+        --volume=/:/rootfs:ro          \
+        --volume=/var/run:/var/run:rw  \
+        --volume=/sys:/sys:ro          \
+        --volume=/var/lib/docker/:/var/lib/docker:ro  \
+        --publish=8080:8080  \
+        --detach=true    \
+        --name=cadvisor  \
+        google/cadvisor:latest
+
+end script
+EOF_CADVISOR
+
 
 
 # install weave

@@ -51,6 +51,8 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [dockerize](https://github.com/jwilder/dockerize)
 
+- [cAdvisor](https://github.com/google/cadvisor/): Analyzes resource usage and performance characteristics of running containers
+
 - [weave](https://github.com/zettio/weave)
 
 - [Docker Registry](https://github.com/docker/docker-registry) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
