@@ -2,10 +2,10 @@
 #
 # provision script; install Docker engine & some handy tools.
 #
-# [NOTE] run by Vagrant; never run on host OS. 
+# [NOTE] run by Vagrant; never run on host OS.
 #
 # @see https://docs.docker.com/installation/debian/
-# 
+#
 
 
 export DEBIAN_FRONTEND=noninteractive
@@ -45,6 +45,9 @@ sudo apt-get update
 # install Docker
 curl -sL https://get.docker.io/ | sudo sh
 
+# enabled when booting
+sudo update-rc.d docker enable
+
 # enable memory and swap accounting
 sed -i -e \
   's/^GRUB_CMDLINE_LINUX=.+/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' \
@@ -74,7 +77,7 @@ EOF_REGISTRY
 
 # install Docker Compose (was: Fig)
 # @see http://docs.docker.com/compose/install/
-curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` 
+curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`
 chmod a+x docker-compose
 sudo mv docker-compose /usr/local/bin
 
@@ -165,6 +168,9 @@ sudo docker rm `sudo docker ps --no-trunc -a -q`
 sudo docker rmi busybox
 sudo apt-get clean
 sudo rm -f \
+  /home/vagrant/*.sh       \
+  /home/vagrant/.vbox_*    \
+  /home/vagrant/.veewee_*  \
   /var/log/messages   \
   /var/log/lastlog    \
   /var/log/auth.log   \
