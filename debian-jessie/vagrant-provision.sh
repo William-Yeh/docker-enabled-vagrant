@@ -14,16 +14,16 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.1.0
-readonly MACHINE_VERSION=0.1.0
+readonly COMPOSE_VERSION=1.2.0
+readonly MACHINE_VERSION=v0.2.0
 
-readonly DOCKERGEN_VERSION=0.3.8
+readonly DOCKERGEN_VERSION=0.3.9
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
 readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.10.1
+readonly CADVISOR_VERSION=0.12.0
 readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
 
 
@@ -31,11 +31,17 @@ readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$
 # fix base box
 #
 
+
+# change repo location to US, if any
+sudo sed -i -e 's/\.uk\./.us./i'   /etc/apt/sources.list
+
 # update packages
 sudo apt-get update
 #sudo apt-get -y -q upgrade
 #sudo apt-get -y -q dist-upgrade
 
+# update systemd to revision greater than 208 (maybe 215)
+sudo apt-get -f -y install systemd
 
 
 #---------------------------------------#
@@ -48,6 +54,11 @@ curl -sL https://get.docker.io/ | sudo sh
 # enabled when booting
 sudo update-rc.d docker enable
 
+# configure for systemd
+cp /vagrant/docker.service  /lib/systemd/system/
+cp /vagrant/docker.socket   /lib/systemd/system/
+
+
 # enable memory and swap accounting
 sed -i -e \
   's/^GRUB_CMDLINE_LINUX=.+/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' \
@@ -58,20 +69,16 @@ sudo update-grub
 sed -i -e \
   's/^DEFAULT_FORWARD_POLICY=.+/DEFAULT_FORWARD_POLICY="ACCEPT"/' \
   /etc/default/ufw
+sudo sysctl -w net.ipv4.ip_forward=1
+cat << EOF_UFW >> /etc/sysctl.conf
+
+# enable UFW forwarding for Docker
+net.ipv4.ip_forward=1
+
+EOF_UFW
 #sudo ufw reload
 
 
-#
-# override "insecure-registry" error for private registry to ease testing
-# @see http://stackoverflow.com/a/27163607/714426
-#
-cat << EOF_REGISTRY >> /etc/default/docker
-
-# allow HTTP access to private registry "registry.com"
-DOCKER_OPTS="--insecure-registry registry.com"
-#DOCKER_OPTS="--insecure-registry 10.0.0.0/24 --insecure-registry registry.com"
-
-EOF_REGISTRY
 
 
 
@@ -84,7 +91,7 @@ sudo mv docker-compose /usr/local/bin
 
 # install Docker Machine
 # @see https://docs.docker.com/machine/
-curl -o docker-machine -L https://github.com/docker/machine/releases/download/v$MACHINE_VERSION/docker-machine_linux-amd64
+curl -o docker-machine -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64
 chmod a+x docker-machine
 sudo mv docker-machine /usr/local/bin
 
@@ -184,7 +191,10 @@ sudo rm -f \
 #
 
 # add 'vagrant' user to docker group
-sudo usermod -aG docker vagrant
+sudo groupadd docker
+sudo gpasswd -a vagrant docker
+#sudo usermod -aG docker vagrant
+
 
 # zero out the free space to save space in the final image
 sudo dd if=/dev/zero of=/EMPTY bs=1M

@@ -1,12 +1,10 @@
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure(2) do |config|
 
   # Packer source: https://github.com/pjkundert/cpppo
-  config.vm.box = "cpppo-jessie-64"
-  config.vm.box_url = "http://box.hardconsulting.com/jessie64-virtualbox.box"
+  #config.vm.box = "cpppo-jessie-64"
+  #config.vm.box_url = "http://box.hardconsulting.com/jessie64-virtualbox.box"
+  config.vm.box = "debian-jessie-64"
+  config.vm.box_url = "https://downloads.sourceforge.net/project/vagrantboxjessie/debian80.box"
 
   # avoid possible request "vagrant@127.0.0.1's password:" when "up" and "ssh"
   config.ssh.password = "vagrant"
