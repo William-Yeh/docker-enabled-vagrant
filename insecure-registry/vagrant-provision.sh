@@ -2,16 +2,22 @@
 #
 # provision script; install Docker Registry.
 #
-# [NOTE] run by Vagrant; never run on host OS. 
+# [NOTE] run by Vagrant; never run on host OS.
 #
 # @see https://github.com/docker/docker-registry
-# 
+# @see https://github.com/docker/distribution/blob/62b70f951f30a711a8a81df1865d0afeeaaa0169/Dockerfile
+#
 
 
 export DEBIAN_FRONTEND=noninteractive
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+
+
+readonly REGISTRY_VERSION=2
+#readonly REGISTRY_VERSION=latest
+readonly REGISTRY_IMAGE=registry:$REGISTRY_VERSION
 
 readonly REGISTRY_CONFIG_DIR=/opt/docker-registry
 readonly REGISTRY_CONFIG_NAME=docker-registry-config.yml
@@ -33,7 +39,7 @@ mkdir $REGISTRY_DBPATH
 # pull docker-registry image
 #
 
-docker pull registry:latest
+docker pull $REGISTRY_IMAGE
 
 
 
@@ -76,7 +82,8 @@ script
         -v $REGISTRY_CONFIG_DIR:/conf         \
         -v $REGISTRY_DBPATH:$REGISTRY_DBPATH  \
         -e DOCKER_REGISTRY_CONFIG=/conf/$REGISTRY_CONFIG_NAME  \
-        registry
+        -e REGISTRY_CONFIGURATION_PATH=/conf/$REGISTRY_CONFIG_NAME  \
+        $REGISTRY_IMAGE
 
 end script
 
@@ -106,4 +113,3 @@ sudo rm -f /EMPTY
 
 
 rm -f /home/vagrant/.bash_history
-
