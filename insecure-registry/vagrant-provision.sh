@@ -4,7 +4,7 @@
 #
 # [NOTE] run by Vagrant; never run on host OS.
 #
-# @see https://github.com/docker/docker-registry
+# @see https://docs.docker.com/registry/configuration/
 # @see https://github.com/docker/distribution/blob/62b70f951f30a711a8a81df1865d0afeeaaa0169/Dockerfile
 #
 
@@ -48,15 +48,32 @@ docker pull $REGISTRY_IMAGE
 #
 
 cat << EOF_CONFIG > $REGISTRY_CONFIG_FULLPATH
-common: &common
-    standalone: true
-    disable_token_auth: true
+# Registry Configuration
+# @see https://docs.docker.com/registry/configuration/
 
-dev:
-    <<: *common
-    loglevel: debug
-    storage: local
-    storage_path: $REGISTRY_DBPATH
+version: 0.1
+
+log:
+    level: debug
+    formatter: text
+
+storage:
+    filesystem:
+        rootdirectory: /opt/docker-registry-db
+    cache:
+        layerinfo: inmemory
+
+http:
+    addr: localhost:5000
+    secret: asecretforlocaldevelopment
+    debug:
+        addr: localhost:5001
+
+auth:
+    silly:
+        realm: silly-realm
+        service: silly-service
+
 EOF_CONFIG
 
 
@@ -76,14 +93,12 @@ respawn
 script
 
     docker run -d  \
-        --name docker-registry   \
-        --restart=always         \
-        -p 80:5000               \
+        --name docker-registry    \
+        --restart=always          \
+        -p 80:5000  -p 5001:5001  \
         -v $REGISTRY_CONFIG_DIR:/conf         \
         -v $REGISTRY_DBPATH:$REGISTRY_DBPATH  \
-        -e DOCKER_REGISTRY_CONFIG=/conf/$REGISTRY_CONFIG_NAME  \
-        -e REGISTRY_CONFIGURATION_PATH=/conf/$REGISTRY_CONFIG_NAME  \
-        $REGISTRY_IMAGE
+        $REGISTRY_IMAGE  /conf/$REGISTRY_CONFIG_NAME
 
 end script
 
