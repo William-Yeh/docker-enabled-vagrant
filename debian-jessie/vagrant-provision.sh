@@ -32,16 +32,11 @@ readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$
 #
 
 
-# change repo location to US, if any
-sudo sed -i -e 's/\.uk\./.us./i'   /etc/apt/sources.list
-
 # update packages
 sudo apt-get update
 #sudo apt-get -y -q upgrade
 #sudo apt-get -y -q dist-upgrade
 
-# update systemd to revision greater than 208 (maybe 215)
-sudo apt-get -f -y install systemd
 
 
 #---------------------------------------#
@@ -51,12 +46,13 @@ sudo apt-get -f -y install systemd
 # install Docker
 curl -sL https://get.docker.io/ | sudo sh
 
-# enabled when booting
-sudo update-rc.d docker enable
-
 # configure for systemd
 cp /vagrant/docker.service  /lib/systemd/system/
 cp /vagrant/docker.socket   /lib/systemd/system/
+
+# enabled when booting
+sudo systemctl enable docker
+sudo systemctl start  docker
 
 
 # enable memory and swap accounting
@@ -132,30 +128,9 @@ curl -o /usr/local/bin/cadvisor -L $CADVISOR_EXE_URL
 chmod a+x /usr/local/bin/cadvisor
 docker pull google/cadvisor:latest
 
-cat << EOF_CADVISOR > /etc/init/cadvisor.conf
-description "cAdvisor"
-
-start on filesystem and started docker
-stop on runlevel [!2345]
-
-respawn
-
-# @see https://github.com/google/cadvisor/blob/master/docs/running.md#standalone
-# @see-also https://github.com/google/cadvisor/issues/432
-script
-
-    docker run  \
-        --volume=/:/rootfs:ro          \
-        --volume=/var/run:/var/run:rw  \
-        --volume=/sys:/sys:ro          \
-        --volume=/var/lib/docker/:/var/lib/docker:ro  \
-        --publish=8080:8080  \
-        --detach=true    \
-        --name=cadvisor  \
-        google/cadvisor:latest
-
-end script
-EOF_CADVISOR
+# configure for systemd
+cp /vagrant/cadvisor.service  /lib/systemd/system/
+sudo systemctl enable cadvisor
 
 
 
