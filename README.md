@@ -25,7 +25,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - Debian 8 ("Jessie") x64:
 
-  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker)
+  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian/jessie64](https://vagrantcloud.com/debian/boxes/jessie64) + Docker - Chef - Puppet
 
 
 
@@ -47,7 +47,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [dockerize](https://github.com/jwilder/dockerize): Utility to simplify running applications in docker containers.
 
-- [cAdvisor](https://github.com/google/cadvisor/): Analyzes resource usage and performance characteristics of running containers
+- [cAdvisor](https://github.com/google/cadvisor/): Analyzes resource usage and performance characteristics of running containers.
 
 - [weave](https://github.com/zettio/weave): creates a virtual network that connects Docker containers deployed across multiple hosts and enables their automatic discovery.
 
