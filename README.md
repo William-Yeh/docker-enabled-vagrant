@@ -28,6 +28,13 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
   - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian/jessie64](https://vagrantcloud.com/debian/boxes/jessie64) + Docker - Chef - Puppet
 
 
+- CentOS 7 x64:
+
+  - [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/), basically [chef/centos-7.1](https://vagrantcloud.com/chef/boxes/centos-7.1) + Docker
+
+
+
+
 
 ## Included software
 
