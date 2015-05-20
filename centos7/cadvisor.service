@@ -1,7 +1,7 @@
 [Unit]
 Description=cAdvisor - Container Advisor
-Requires=docker.socket
-After=docker.socket
+Requires=docker.service
+After=docker.service
 
 [Service]
 ExecStartPre=/bin/sh -c "docker history google/cadvisor:latest >/dev/null || docker pull google/cadvisor:latest"
