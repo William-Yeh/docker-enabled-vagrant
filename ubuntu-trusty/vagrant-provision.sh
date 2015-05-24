@@ -146,6 +146,7 @@ script
         --volume=/var/lib/docker/:/var/lib/docker:ro  \
         --publish=8080:8080  \
         --detach=true    \
+        --restart=always \
         --name=cadvisor  \
         google/cadvisor:latest
 
