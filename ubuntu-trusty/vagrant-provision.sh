@@ -132,10 +132,12 @@ description "cAdvisor"
 start on filesystem and started docker
 stop on runlevel [!2345]
 
-respawn
+#respawn
 
 # @see https://github.com/google/cadvisor/blob/master/docs/running.md#standalone
 script
+
+    docker rm -f cadvisor  || true
 
     docker run  \
         --volume=/:/rootfs:ro          \
