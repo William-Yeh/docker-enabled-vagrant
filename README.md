@@ -18,7 +18,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
   - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker), basically [ubuntu/trusty64](https://vagrantcloud.com/ubuntu/boxes/trusty64) + Docker - Chef - Puppet
 
-  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry 0.9](https://github.com/docker/docker-registry)
+  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry 2.0](https://github.com/docker/docker-registry)
 
   - [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes), basically `williamyeh/ubuntu-trusty64-docker` + Kubernetes
 
@@ -60,7 +60,7 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [Docker host tools](https://github.com/William-Yeh/docker-host-tools): Some handy tools for managing Docker images and containers (also written by me).
 
-- [Docker Registry 0.9](https://github.com/docker/docker-registry) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
+- [Docker Registry 2.0](https://github.com/docker/docker-registry) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
 
 - [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box)
 

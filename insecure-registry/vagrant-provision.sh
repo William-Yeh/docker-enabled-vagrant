@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# provision script; install Docker Registry.
+# provision script; install Docker Registry V2.
 #
 # [NOTE] run by Vagrant; never run on host OS.
 #
@@ -30,8 +30,8 @@ readonly REGISTRY_DBPATH=/opt/docker-registry-db
 # prepare directory
 #
 
-mkdir $REGISTRY_CONFIG_DIR
-mkdir $REGISTRY_DBPATH
+mkdir -p $REGISTRY_CONFIG_DIR
+mkdir -p $REGISTRY_DBPATH
 
 
 
@@ -50,30 +50,54 @@ docker pull $REGISTRY_IMAGE
 cat << EOF_CONFIG > $REGISTRY_CONFIG_FULLPATH
 # Registry Configuration
 # @see https://docs.docker.com/registry/configuration/
+# @see https://docs.docker.com/registry/deploying/
 
 version: 0.1
 
 log:
     level: debug
-    formatter: text
+    fields:
+        service: registry
+        environment: development
 
 storage:
-    filesystem:
-        rootdirectory: /opt/docker-registry-db
     cache:
         layerinfo: inmemory
+    filesystem:
+        rootdirectory: $REGISTRY_DBPATH
 
 http:
-    addr: localhost:5000
+    addr: :5000
     secret: asecretforlocaldevelopment
     debug:
         addr: localhost:5001
 
-auth:
-    silly:
-        realm: silly-realm
-        service: silly-service
+redis:
+    addr: localhost:6379
+    pool:
+        maxidle: 16
+        maxactive: 64
+        idletimeout: 300s
+    dialtimeout: 10ms
+    readtimeout: 10ms
+    writetimeout: 10ms
 
+notifications:
+    endpoints:
+        - name: local-8082
+          url: http://localhost:5003/callback
+          headers:
+              Authorization: [Bearer <an example token>]
+          timeout: 1s
+          threshold: 10
+          backoff: 1s
+          disabled: true
+        - name: local-8083
+          url: http://localhost:8083/callback
+          timeout: 1s
+          threshold: 10
+          backoff: 1s
+          disabled: true
 EOF_CONFIG
 
 
@@ -88,9 +112,12 @@ description "Docker Registry"
 start on filesystem and started docker
 stop on runlevel [!2345]
 
-respawn
+#respawn
 
 script
+
+    docker kill -f docker-registry  || true
+    docker rm -f docker-registry    || true
 
     docker run -d  \
         --name docker-registry    \
