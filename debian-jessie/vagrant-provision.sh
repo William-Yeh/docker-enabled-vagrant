@@ -177,7 +177,7 @@ sudo rm -f \
   /var/log/syslog     \
   /var/log/daemon.log \
   /var/log/docker.log
-
+sudo rm -rf /var/log/chef
 
 #---------------------------------------#
 # Vagrant-specific settings below
