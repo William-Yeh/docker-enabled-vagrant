@@ -14,16 +14,16 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.2.0
-readonly MACHINE_VERSION=v0.2.0
+readonly COMPOSE_VERSION=1.3.0
+readonly MACHINE_VERSION=v0.3.0
 
-readonly DOCKERGEN_VERSION=0.3.9
+readonly DOCKERGEN_VERSION=0.4.0
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
 readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.12.0
+readonly CADVISOR_VERSION=0.15.1
 readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
 
 
@@ -121,6 +121,22 @@ rm *.tar.gz
 
 # install swarm
 sudo docker pull swarm
+
+
+# install docker-bench-security
+docker pull diogomonica/docker-bench-security
+cat << EOF_BENCH_SECURITY > /usr/local/bin/docker-bench-security
+#!/bin/sh
+
+exec docker run -it --label docker-bench-security \
+    --net host --pid host \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /usr/lib/systemd:/usr/lib/systemd  \
+    -v /etc:/etc \
+    diogomonica/docker-bench-security
+
+EOF_BENCH_SECURITY
+chmod a+x /usr/local/bin/docker-bench-security
 
 
 # install cAdvisor

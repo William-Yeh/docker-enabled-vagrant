@@ -48,6 +48,8 @@ Use the following public box names (all available from [Vagrant Cloud](https://v
 
 - [Docker Machine](https://github.com/docker/machine): Machine management for a container-centric world.
 
+- [docker-bench-security](https://github.com/docker/docker-bench-security): a script that checks for all the automatable tests included in the [CIS Docker 1.6 Benchmark](https://benchmarks.cisecurity.org/tools2/docker/CIS_Docker_1.6_Benchmark_v1.0.0.pdf).
+
 - [Pipework](https://github.com/jpetazzo/pipework): Software-Defined Networking for Linux Containers.
 
 - [docker-gen](https://github.com/jwilder/docker-gen): Generate files from docker container meta-data.
