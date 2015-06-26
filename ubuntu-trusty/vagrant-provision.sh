@@ -66,7 +66,7 @@ sed -i -e \
 # override "insecure-registry" error for private registry to ease testing
 # @see http://stackoverflow.com/a/27163607/714426
 #
-cat << EOF_REGISTRY >> /etc/default/docker
+cat << "EOF_REGISTRY" >> /etc/default/docker
 
 # allow Docker Remote API
 DOCKER_OPTS="$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
