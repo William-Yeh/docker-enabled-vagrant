@@ -68,8 +68,11 @@ sed -i -e \
 #
 cat << EOF_REGISTRY >> /etc/default/docker
 
+# allow Docker Remote API
+DOCKER_OPTS="$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+
 # allow HTTP access to private registry "registry.com"
-DOCKER_OPTS="--insecure-registry registry.com"
+DOCKER_OPTS="$DOCKER_OPTS --insecure-registry registry.com"
 #DOCKER_OPTS="--insecure-registry 10.0.0.0/24 --insecure-registry registry.com"
 
 EOF_REGISTRY
