@@ -16,6 +16,9 @@ export LANGUAGE=en_US.UTF-8
 readonly COMPOSE_VERSION=1.3.0
 readonly MACHINE_VERSION=v0.3.0
 
+readonly DOCKVIZ_VERSION=v0.2
+readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
+
 readonly DOCKERGEN_VERSION=0.4.0
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
@@ -80,6 +83,11 @@ sudo mv docker-compose /usr/local/bin
 curl -o docker-machine -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64
 chmod a+x docker-machine
 sudo mv docker-machine /usr/local/bin
+
+
+# install dockviz
+curl -o /usr/local/bin/dockviz -L $DOCKVIZ_EXE_URL
+chmod a+x /usr/local/bin/dockviz
 
 
 # install Pipework
