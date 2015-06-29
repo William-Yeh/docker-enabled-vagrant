@@ -177,6 +177,14 @@ done
 
 
 
+#
+# de-duplicate ID for Swarm
+# @see https://github.com/docker/swarm/issues/563
+# @see https://github.com/docker/swarm/issues/362
+#
+rm -f /etc/docker/key.json
+
+
 # clean up
 sudo docker rm `sudo docker ps --no-trunc -a -q`
 sudo docker rmi -f busybox
