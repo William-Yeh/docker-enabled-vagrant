@@ -50,7 +50,7 @@ sudo apt-get update
 #
 
 # install Docker
-curl -sL https://get.docker.io/ubuntu/ | sudo sh
+curl -sL https://get.docker.io/ | sudo sh
 
 # enable memory and swap accounting
 sed -i -e \
