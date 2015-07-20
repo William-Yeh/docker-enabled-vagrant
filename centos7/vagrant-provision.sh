@@ -13,7 +13,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.3.0
+readonly COMPOSE_VERSION=1.3.3
 readonly MACHINE_VERSION=v0.3.0
 
 readonly DOCKVIZ_VERSION=v0.2
@@ -25,8 +25,43 @@ readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.15.1
+readonly CADVISOR_VERSION=0.16.0
 readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
+
+
+#==========================================================#
+
+# check if docker has been isntalled...
+which docker
+if [ "$?" -eq 0 ]; then
+
+    sudo yum clean all
+    sudo rm -f \
+            /var/log/vboxadd-*.log  \
+            /var/log/VBoxGuestAdditions*.log
+
+    # zero out the free space to save space in the final image
+    sudo dd if=/dev/zero of=/EMPTY bs=1M
+    sudo rm -f /EMPTY
+
+
+    rm -f /home/vagrant/.bash_history  /var/mail/vagrant
+
+    sudo cat <<-HOSTNAME > /etc/hostname
+    localhost
+HOSTNAME
+
+    cat <<-EOBASHRC  >> /home/vagrant/.bashrc
+    export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+    export LC_CTYPE=en_US.UTF-8
+    cat /etc/redhat-release
+    uname -a
+EOBASHRC
+
+    exit 0
+fi
+
+#==========================================================#
 
 
 #---------------------------------------#
@@ -209,22 +244,3 @@ sudo rm -f \
 sudo groupadd docker
 sudo usermod -aG docker vagrant
 #sudo gpasswd -a vagrant docker
-
-
-# zero out the free space to save space in the final image
-sudo dd if=/dev/zero of=/EMPTY bs=1M
-sudo rm -f /EMPTY
-
-
-rm -f /home/vagrant/.bash_history  /var/mail/vagrant
-
-sudo cat <<HOSTNAME > /etc/hostname
-localhost
-HOSTNAME
-
-cat <<EOF  >> /home/vagrant/.bashrc
-export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
-export LC_CTYPE=en_US.UTF-8
-cat /etc/redhat-release
-uname -a
-EOF
