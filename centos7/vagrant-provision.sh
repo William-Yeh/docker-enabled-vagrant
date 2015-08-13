@@ -13,10 +13,10 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.3.3
-readonly MACHINE_VERSION=v0.3.0
+readonly COMPOSE_VERSION=1.4.0
+readonly MACHINE_VERSION=v0.4.0
 
-readonly DOCKVIZ_VERSION=v0.2
+readonly DOCKVIZ_VERSION=v0.2.1
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
 readonly DOCKERGEN_VERSION=0.4.0
@@ -70,7 +70,7 @@ fi
 
 
 # update packages
-#sudo yum -y update
+sudo yum -y update
 #sudo yum -y -q upgrade
 
 
@@ -80,9 +80,7 @@ fi
 #
 
 # install Docker
-yum -y install docker
-curl -sSL https://get.docker.com/builds/Linux/x86_64/docker-latest -o /usr/bin/docker
-chmod a+x /usr/bin/docker
+curl -sL https://get.docker.io/ | sudo sh
 
 # configure for docker
 sed -i -e "s/^# INSECURE_REGISTRY=.*$/INSECURE_REGISTRY='--insecure-registry registry.com'/"  /etc/sysconfig/docker
