@@ -170,7 +170,7 @@ docker pull diogomonica/docker-bench-security
 cat << EOF_BENCH_SECURITY > /usr/local/bin/docker-bench-security
 #!/bin/sh
 
-exec docker run -it --label docker-bench-security \
+exec docker run -it --label docker-bench-security="" \
     --net host --pid host \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /usr/lib/systemd:/usr/lib/systemd  \

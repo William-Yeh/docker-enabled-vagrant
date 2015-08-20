@@ -2,8 +2,6 @@
 #
 # provision script; install Docker engine & some handy tools.
 #
-# [NOTE] run by Vagrant; never run on host OS.
-#
 # @see https://docs.docker.com/installation/ubuntulinux/
 #
 
@@ -32,52 +30,45 @@ readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$
 
 #==========================================================#
 
-# check if docker has been isntalled...
-which docker
-if [ "$?" -eq 0 ]; then
+#
+# error handling
+#
 
-    sudo apt-get -y autoremove
-    sudo apt-get clean
-    sudo rm -f \
-            /var/log/vboxadd-*.log  \
-            /var/log/VBoxGuestAdditions*.log
+do_error_exit() {
+    echo { \"status\": $RETVAL, \"error_line\": $BASH_LINENO }
+    exit
+}
 
-    # zero out the free space to save space in the final image
-    sudo dd if=/dev/zero of=/EMPTY bs=1M
-    sudo rm -f /EMPTY
-
-
-    rm -f /home/vagrant/.bash_history  /var/mail/vagrant
-
-    sudo cat <<-HOSTNAME > /etc/hostname
-    localhost
-HOSTNAME
-
-    cat <<-EOBASHRC  >> /home/vagrant/.bashrc
-    export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
-    export LC_CTYPE=C.UTF-8
-    lsb_release -a
-EOBASHRC
-
-    exit 0
-fi
-
-#==========================================================#
+trap 'RETVAL=$?; echo "ERROR"; do_error_exit '  ERR
+trap 'RETVAL=$?; echo "received signal to stop";  do_error_exit ' SIGQUIT SIGTERM SIGINT
 
 
 #---------------------------------------#
 # fix base box
 #
 
+sudo cat <<-HOSTNAME > /etc/hostname
+  localhost
+HOSTNAME
+
+cat <<-EOBASHRC  >> /home/vagrant/.bashrc
+  export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+  export LC_CTYPE=C.UTF-8
+EOBASHRC
+
+
 # disable the warning "Your environment specifies an invalid locale"
-sudo touch /var/lib/cloud/instance/locale-check.skip
+sudo touch /var/lib/cloud/instance/locale-check.skip  || true
 
 
 # update packages
-sudo apt-get update
+#sudo apt-get update
+sudo apt-get install -y curl
 #sudo apt-get -y -q upgrade
 #sudo apt-get -y -q dist-upgrade
 
+
+#==========================================================#
 
 
 #---------------------------------------#
@@ -86,6 +77,9 @@ sudo apt-get update
 
 # install Docker
 curl -sL https://get.docker.io/ | sudo sh
+
+# add 'vagrant' user to docker group
+sudo usermod -aG docker vagrant
 
 # enable memory and swap accounting
 sed -i -e \
@@ -172,7 +166,7 @@ docker pull diogomonica/docker-bench-security
 cat << EOF_BENCH_SECURITY > /usr/local/bin/docker-bench-security
 #!/bin/sh
 
-exec docker run -it --label docker-bench-security \
+exec docker run -it --label docker-bench-security="" \
     --net host --pid host \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /usr/lib/systemd:/usr/lib/systemd  \
@@ -245,35 +239,20 @@ done
 # @see https://github.com/docker/swarm/issues/563
 # @see https://github.com/docker/swarm/issues/362
 #
-rm -f /etc/docker/key.json
+rm -f /etc/docker/key.json  || true
 
 
 # clean up
-sudo docker rm `sudo docker ps --no-trunc -a -q`
-sudo docker rmi -f busybox
-for SERVICE in "chef-client" "puppet"; do
-    /usr/sbin/update-rc.d -f $SERVICE remove
-    rm /etc/init.d/$SERVICE
-    pkill -9 -f $SERVICE
-done
-sudo apt-get autoremove -y chef puppet
-sudo apt-get clean
+sudo docker rm `sudo docker ps --no-trunc -a -q`  || true
+sudo docker rmi -f busybox  || true
+
 sudo rm -f \
   /var/log/messages   \
   /var/log/lastlog    \
   /var/log/auth.log   \
   /var/log/syslog     \
   /var/log/daemon.log \
-  /var/log/docker.log
-sudo rm -rf  \
-  /var/log/chef       \
-  /var/chef           \
-  /var/lib/puppet
-
-
-#---------------------------------------#
-# Vagrant-specific settings below
-#
-
-# add 'vagrant' user to docker group
-sudo usermod -aG docker vagrant
+  /var/log/docker.log \
+  /home/vagrant/.bash_history \
+  /var/mail/vagrant           \
+  || true
