@@ -2,8 +2,6 @@
 #
 # provision script; install Docker engine & some handy tools.
 #
-# [NOTE] run by Vagrant; never run on host OS.
-#
 # @see https://docs.docker.com/installation/centos/
 #
 
@@ -81,6 +79,9 @@ sudo yum -y update
 
 # install Docker
 curl -sL https://get.docker.io/ | sudo sh
+
+# add 'vagrant' user to "docker" group
+sudo usermod -aG docker vagrant
 
 # configure for docker
 sed -i -e "s/^# INSECURE_REGISTRY=.*$/INSECURE_REGISTRY='--insecure-registry registry.com'/"  /etc/sysconfig/docker
@@ -215,12 +216,12 @@ done
 # @see https://github.com/docker/swarm/issues/563
 # @see https://github.com/docker/swarm/issues/362
 #
-rm -f /etc/docker/key.json
+rm -f /etc/docker/key.json  || true
 
 
 # clean up
-sudo docker rm `sudo docker ps --no-trunc -a -q`
-sudo docker rmi -f busybox
+sudo docker rm `sudo docker ps --no-trunc -a -q`  || true
+sudo docker rmi -f busybox  || true
 sudo yum -y clean all
 sudo rm -f \
   /home/vagrant/*.sh       \
@@ -238,7 +239,3 @@ sudo rm -f \
 # Vagrant-specific settings below
 #
 
-# add 'vagrant' user to "docker" group
-sudo groupadd docker
-sudo usermod -aG docker vagrant
-#sudo gpasswd -a vagrant docker

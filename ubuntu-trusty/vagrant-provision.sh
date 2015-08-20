@@ -36,7 +36,7 @@ readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$
 
 do_error_exit() {
     echo { \"status\": $RETVAL, \"error_line\": $BASH_LINENO }
-    exit
+    exit $RETVAL
 }
 
 trap 'RETVAL=$?; echo "ERROR"; do_error_exit '  ERR
@@ -90,7 +90,8 @@ sudo update-grub
 # enable UFW forwarding
 sed -i -e \
   's/^DEFAULT_FORWARD_POLICY=.+/DEFAULT_FORWARD_POLICY="ACCEPT"/' \
-  /etc/default/ufw
+  /etc/default/ufw  \
+  || true
 #sudo ufw reload
 
 
