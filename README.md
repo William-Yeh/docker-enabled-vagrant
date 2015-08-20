@@ -25,7 +25,7 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - Debian 8 ("Jessie") x64:
 
-  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian/jessie64](https://vagrantcloud.com/debian/boxes/jessie64) + Docker - Chef - Puppet
+  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian-8.1.0-amd64](http://cdimage.debian.org/cdimage/release/8.1.0/amd64/) + Docker
 
 
 - CentOS 7 x64:
@@ -76,7 +76,7 @@ Here are steps you can follow to build these boxes on your own.
 
 ### Packer version
 
-**NOTE: for [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker) only.**
+**NOTE: for [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker) and [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker) only.**
 
 
 First, install the [Packer](https://www.packer.io/) tool on your host machine.
