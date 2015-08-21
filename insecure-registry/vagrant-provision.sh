@@ -1,11 +1,8 @@
 #!/bin/bash
 #
-# provision script; install Docker Registry V2.
+# provision script; install Docker engine & some handy tools.
 #
-# [NOTE] run by Vagrant; never run on host OS.
-#
-# @see https://docs.docker.com/registry/configuration/
-# @see https://github.com/docker/distribution/blob/62b70f951f30a711a8a81df1865d0afeeaaa0169/Dockerfile
+# @see https://docs.docker.com/installation/ubuntulinux/
 #
 
 
@@ -15,143 +12,248 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly REGISTRY_VERSION=2
-#readonly REGISTRY_VERSION=latest
-readonly REGISTRY_IMAGE=registry:$REGISTRY_VERSION
+readonly COMPOSE_VERSION=1.4.0
+readonly MACHINE_VERSION=v0.4.0
 
-readonly REGISTRY_CONFIG_DIR=/opt/docker-registry
-readonly REGISTRY_CONFIG_NAME=docker-registry-config.yml
-readonly REGISTRY_CONFIG_FULLPATH=$REGISTRY_CONFIG_DIR/$REGISTRY_CONFIG_NAME
-readonly REGISTRY_DBPATH=/opt/docker-registry-db
+readonly DOCKVIZ_VERSION=v0.2.1
+readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
+readonly DOCKERGEN_VERSION=0.4.0
+readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
+
+readonly DOCKERIZE_VERSION=v0.0.2
+readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+readonly CADVISOR_VERSION=0.16.0
+readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
+
+
+#==========================================================#
+
+#
+# error handling
+#
+
+do_error_exit() {
+    echo { \"status\": $RETVAL, \"error_line\": $BASH_LINENO }
+    exit $RETVAL
+}
+
+trap 'RETVAL=$?; echo "ERROR"; do_error_exit '  ERR
+trap 'RETVAL=$?; echo "received signal to stop";  do_error_exit ' SIGQUIT SIGTERM SIGINT
 
 
 #---------------------------------------#
-# prepare directory
+# fix base box
 #
 
-mkdir -p $REGISTRY_CONFIG_DIR
-mkdir -p $REGISTRY_DBPATH
+sudo cat <<-HOSTNAME > /etc/hostname
+  localhost
+HOSTNAME
 
+cat <<-EOBASHRC  >> /home/vagrant/.bashrc
+  export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+  export LC_CTYPE=C.UTF-8
+EOBASHRC
+
+
+# disable the warning "Your environment specifies an invalid locale"
+sudo touch /var/lib/cloud/instance/locale-check.skip  || true
+
+
+# update packages
+#sudo apt-get update
+sudo apt-get install -y curl
+#sudo apt-get -y -q upgrade
+#sudo apt-get -y -q dist-upgrade
+
+
+#==========================================================#
 
 
 #---------------------------------------#
-# pull docker-registry image
+# Docker-related stuff
 #
 
-docker pull $REGISTRY_IMAGE
+# install Docker
+curl -sL https://get.docker.io/ | sudo sh
+
+# add 'vagrant' user to docker group
+sudo usermod -aG docker vagrant
+
+# enable memory and swap accounting
+sed -i -e \
+  's/^GRUB_CMDLINE_LINUX=.+/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' \
+  /etc/default/grub
+sudo update-grub
+
+# enable UFW forwarding
+sed -i -e \
+  's/^DEFAULT_FORWARD_POLICY=.+/DEFAULT_FORWARD_POLICY="ACCEPT"/' \
+  /etc/default/ufw  \
+  || true
+#sudo ufw reload
 
 
-
-#---------------------------------------#
-# install config file
 #
-
-cat << EOF_CONFIG > $REGISTRY_CONFIG_FULLPATH
-# Registry Configuration
-# @see https://docs.docker.com/registry/configuration/
-# @see https://docs.docker.com/registry/deploying/
-
-version: 0.1
-
-log:
-    level: debug
-    fields:
-        service: registry
-        environment: development
-
-storage:
-    cache:
-        layerinfo: inmemory
-    filesystem:
-        rootdirectory: $REGISTRY_DBPATH
-
-http:
-    addr: :5000
-    secret: asecretforlocaldevelopment
-    debug:
-        addr: localhost:5001
-
-redis:
-    addr: localhost:6379
-    pool:
-        maxidle: 16
-        maxactive: 64
-        idletimeout: 300s
-    dialtimeout: 10ms
-    readtimeout: 10ms
-    writetimeout: 10ms
-
-notifications:
-    endpoints:
-        - name: local-8082
-          url: http://localhost:5003/callback
-          headers:
-              Authorization: [Bearer <an example token>]
-          timeout: 1s
-          threshold: 10
-          backoff: 1s
-          disabled: true
-        - name: local-8083
-          url: http://localhost:8083/callback
-          timeout: 1s
-          threshold: 10
-          backoff: 1s
-          disabled: true
-EOF_CONFIG
-
-
-
-#---------------------------------------#
-# install init script for Upstart
+# override "insecure-registry" error for private registry to ease testing
+# @see http://stackoverflow.com/a/27163607/714426
 #
+cat << "EOF_REGISTRY" >> /etc/default/docker
 
-cat << EOF_INIT > /etc/init/docker-registry.conf
-description "Docker Registry"
+# allow Docker Remote API
+DOCKER_OPTS="$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+
+# allow HTTP access to private registry "registry.com"
+DOCKER_OPTS="$DOCKER_OPTS --insecure-registry registry.com"
+#DOCKER_OPTS="--insecure-registry 10.0.0.0/24 --insecure-registry registry.com"
+
+EOF_REGISTRY
+
+
+
+# install Docker Compose (was: Fig)
+# @see http://docs.docker.com/compose/install/
+curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`
+chmod a+x docker-compose
+sudo mv docker-compose /usr/local/bin
+
+
+# install Docker Machine
+# @see https://docs.docker.com/machine/
+curl -o docker-machine -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64
+chmod a+x docker-machine
+sudo mv docker-machine /usr/local/bin
+
+
+# install dockviz
+curl -o /usr/local/bin/dockviz -L $DOCKVIZ_EXE_URL
+chmod a+x /usr/local/bin/dockviz
+
+
+# install Pipework
+# @see https://github.com/jpetazzo/pipework
+curl -o pipework -L https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
+chmod a+x pipework
+sudo mv pipework /usr/local/bin
+
+
+# install docker-gen
+# @see https://github.com/jwilder/docker-gen
+curl -o docker-gen.tar.gz -L https://github.com/jwilder/docker-gen/releases/download/$DOCKERGEN_VERSION/$DOCKERGEN_TARBALL
+tar xvzf docker-gen.tar.gz
+sudo chown root docker-gen
+sudo chgrp root docker-gen
+sudo mv docker-gen /usr/local/bin
+rm *.tar.gz
+
+
+# install dockerize
+# @see https://github.com/jwilder/dockerize
+curl -o dockerize.tar.gz -L https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/$DOCKERIZE_TARBALL
+tar xzvf dockerize.tar.gz
+sudo chown root dockerize
+sudo chgrp root dockerize
+sudo mv dockerize /usr/local/bin
+rm *.tar.gz
+
+
+# install swarm
+sudo docker pull swarm
+
+
+# install docker-bench-security
+docker pull diogomonica/docker-bench-security
+cat << EOF_BENCH_SECURITY > /usr/local/bin/docker-bench-security
+#!/bin/sh
+
+exec docker run -it --label docker-bench-security="" \
+    --net host --pid host \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /usr/lib/systemd:/usr/lib/systemd  \
+    -v /etc:/etc \
+    diogomonica/docker-bench-security
+
+EOF_BENCH_SECURITY
+chmod a+x /usr/local/bin/docker-bench-security
+
+
+# install cAdvisor
+curl -o /usr/local/bin/cadvisor -L $CADVISOR_EXE_URL
+chmod a+x /usr/local/bin/cadvisor
+docker pull google/cadvisor:latest
+
+cat << EOF_CADVISOR > /etc/init/cadvisor.conf
+description "cAdvisor"
 
 start on filesystem and started docker
 stop on runlevel [!2345]
 
 #respawn
 
+# @see https://github.com/google/cadvisor/blob/master/docs/running.md#standalone
 script
 
-    docker kill -f docker-registry  || true
-    docker rm -f docker-registry    || true
+    docker rm -f cadvisor  || true
 
-    docker run -d  \
-        --name docker-registry    \
-        --restart=always          \
-        -p 80:5000  -p 5001:5001  \
-        -v $REGISTRY_CONFIG_DIR:/conf         \
-        -v $REGISTRY_DBPATH:$REGISTRY_DBPATH  \
-        $REGISTRY_IMAGE  /conf/$REGISTRY_CONFIG_NAME
+    docker run  \
+        --volume=/:/rootfs:ro          \
+        --volume=/var/run:/var/run:rw  \
+        --volume=/sys:/sys:ro          \
+        --volume=/var/lib/docker/:/var/lib/docker:ro  \
+        --publish=8080:8080  \
+        --detach=true    \
+        --restart=always \
+        --name=cadvisor  \
+        google/cadvisor:latest
 
 end script
+EOF_CADVISOR
 
-EOF_INIT
 
+
+# install weave
+# @see https://github.com/zettio/weave
+curl -o weave -L https://github.com/zettio/weave/releases/download/latest_release/weave
+sudo chmod a+x  weave
+sudo chown root weave
+sudo chgrp root weave
+sudo mv weave /usr/local/bin
+# preload images
+sudo weave setup
+
+
+
+# install Docker-Host-Tools
+# @see https://github.com/William-Yeh/docker-host-tools
+DOCKER_HOST_TOOLS=( docker-rm-stopped  docker-rmi-repo  docker-inspect-attr )
+for item in "${DOCKER_HOST_TOOLS[@]}"; do
+  curl -o /usr/local/bin/$item  -sSL https://raw.githubusercontent.com/William-Yeh/docker-host-tools/master/$item
+  chmod a+x /usr/local/bin/$item
+done
+
+
+
+
+#
+# de-duplicate ID for Swarm
+# @see https://github.com/docker/swarm/issues/563
+# @see https://github.com/docker/swarm/issues/362
+#
+rm -f /etc/docker/key.json  || true
 
 
 # clean up
-sudo apt-get clean
+sudo docker rm `sudo docker ps --no-trunc -a -q`  || true
+sudo docker rmi -f busybox  || true
+
 sudo rm -f \
   /var/log/messages   \
   /var/log/lastlog    \
   /var/log/auth.log   \
   /var/log/syslog     \
   /var/log/daemon.log \
-  /var/log/docker.log
-
-
-#---------------------------------------#
-# Vagrant-specific settings below
-#
-
-
-# zero out the free space to save space in the final image
-sudo dd if=/dev/zero of=/EMPTY bs=1M
-sudo rm -f /EMPTY
-
-
-rm -f /home/vagrant/.bash_history
+  /var/log/docker.log \
+  /home/vagrant/.bash_history \
+  /var/mail/vagrant           \
+  || true

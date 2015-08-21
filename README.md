@@ -18,7 +18,7 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
   - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker), basically [ubuntu-14.04.3-server-amd64](http://releases.ubuntu.com/14.04/) + Docker
 
-  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry 2.0](https://github.com/docker/docker-registry)
+  - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry 2.x](https://github.com/docker/distribution)
 
   - [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes), basically `williamyeh/ubuntu-trusty64-docker` + Kubernetes *(UNDER CONSTRUCTION)*
 
@@ -64,7 +64,7 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - [Docker host tools](https://github.com/William-Yeh/docker-host-tools): Some handy tools for managing Docker images and containers (also written by me).
 
-- [Docker Registry 2.0](https://github.com/docker/docker-registry) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
+- [Docker Registry 2.x](https://github.com/docker/distribution) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
 
 - [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box) *(UNDER CONSTRUCTION)*
 
@@ -76,7 +76,7 @@ Here are steps you can follow to build these boxes on your own.
 
 ### Packer version
 
-**NOTE: for [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker) and [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker) only.**
+**NOTE: for all boxes except [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/).**
 
 
 First, install the [Packer](https://www.packer.io/) tool on your host machine.
@@ -137,8 +137,8 @@ Second, generate the Vagrant box file of your choice:
 
 ```
 # change working directory to any specific OS;
-# for example, "debian-jessie"
-cd debian-jessie
+# for example, "ubuntu-trusty-kubernetes"
+cd ubuntu-trusty-kubernetes
 
 # build it!
 ./build.sh
@@ -151,8 +151,8 @@ ls -al
 Then, you can use the generated box file as follows:
 
 ```
-# give it a local name (e.g., "my-jessie64")
-vagrant box add  --name my-jessie64  XXX.box
+# give it a local name (e.g., "my-k8s")
+vagrant box add  --name my-k8s  XXX.box
 
 # now you'll see the box installed locally
 vagrant box list
