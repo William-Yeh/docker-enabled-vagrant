@@ -11,3 +11,7 @@ rm -rf ubuntu-trusty/scripts
 rm -rf debian-jessie/floppy
 rm -rf debian-jessie/http
 rm -rf debian-jessie/scripts
+
+rm -rf insecure-registry/floppy
+rm -rf insecure-registry/http
+rm -rf insecure-registry/scripts

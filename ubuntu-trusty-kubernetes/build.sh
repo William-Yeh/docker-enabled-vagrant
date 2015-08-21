@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly BOX_FILE=ubuntu-trusty64-kube.box
+readonly BOX_FILE=ubuntu-trusty64-k8s.box
 #readonly BOX_FILE=output.box
 
 
