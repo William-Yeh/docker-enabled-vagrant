@@ -30,7 +30,7 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - CentOS 7 x64:
 
-  - [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/), basically [chef/centos-7.1](https://vagrantcloud.com/chef/boxes/centos-7.1) + Docker
+  - [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/), basically [CentOS 7.1](http://mirrors.kernel.org/centos/7.1.1503/) + Docker
 
 
 
@@ -76,7 +76,7 @@ Here are steps you can follow to build these boxes on your own.
 
 ### Packer version
 
-**NOTE: for all boxes except [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/).**
+**NOTE: for all boxes except [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes).**
 
 
 First, install the [Packer](https://www.packer.io/) tool on your host machine.
@@ -92,33 +92,45 @@ git submodule init
 ./copy-bento.sh
 ```
 
-Third, generate the Vagrant box file of your choice:
+Third, choose the box directory of your choice:
 
 
 ```
 # change working directory to any specific OS;
 # for example, "ubuntu-trusty"
 cd ubuntu-trusty
+```
 
 
-# build `ubuntu-trusty64-docker`, VirtualBox version:
+Now, you can either generate the Vagrant box file *on your machine*:
+
+
+```
+# build `ubuntu-trusty64-docker`:
+packer build ubuntu-trusty64-docker.json
+
+
+# build `ubuntu-trusty64-docker`, VirtualBox version only:
 packer build -only=virtualbox-iso  \
        ubuntu-trusty64-docker.json
 
 
-# build `ubuntu-trusty64-docker`, VirtualBox version,
+# build `ubuntu-trusty64-docker`, VirtualBox version only,
 # with pre-downloaded ISO file from `file:///Volumes/ISO/`:
 packer build -only=virtualbox-iso  \
        -var 'mirror=file:///Volumes/ISO/'  \
        ubuntu-trusty64-docker.json
 ```
 
-If successful, you'll get an 'XXX.box' file in the `builds` directory.
+you'll get an 'XXX.box' file in the `builds` directory, if successful.
 
 
-Last, push to [Atlas](https://atlas.hashicorp.com/) if you like, and Atlas will build and host both virtualbox and vmware_desktop versions for you:
+Or, you can *delegate the building and hosting tasks* to [Atlas](https://atlas.hashicorp.com/):
 
 ```
+# make sure the following environment variables are set:
+#   ATLAS_TOKEN
+#   ATLAS_USERNAME
 packer push ubuntu-trusty64-docker.json
 ```
 

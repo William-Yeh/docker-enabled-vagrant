@@ -29,42 +29,31 @@ readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$
 
 #==========================================================#
 
-# check if docker has been isntalled...
-which docker
-if [ "$?" -eq 0 ]; then
+#
+# error handling
+#
 
-    sudo yum clean all
-    sudo rm -f \
-            /var/log/vboxadd-*.log  \
-            /var/log/VBoxGuestAdditions*.log
+do_error_exit() {
+    echo { \"status\": $RETVAL, \"error_line\": $BASH_LINENO }
+    exit $RETVAL
+}
 
-    # zero out the free space to save space in the final image
-    sudo dd if=/dev/zero of=/EMPTY bs=1M
-    sudo rm -f /EMPTY
-
-
-    rm -f /home/vagrant/.bash_history  /var/mail/vagrant
-
-    sudo cat <<-HOSTNAME > /etc/hostname
-    localhost
-HOSTNAME
-
-    cat <<-EOBASHRC  >> /home/vagrant/.bashrc
-    export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
-    export LC_CTYPE=en_US.UTF-8
-    cat /etc/redhat-release
-    uname -a
-EOBASHRC
-
-    exit 0
-fi
-
-#==========================================================#
+trap 'RETVAL=$?; echo "ERROR"; do_error_exit '  ERR
+trap 'RETVAL=$?; echo "received signal to stop";  do_error_exit ' SIGQUIT SIGTERM SIGINT
 
 
 #---------------------------------------#
 # fix base box
 #
+
+sudo cat <<-HOSTNAME > /etc/hostname
+localhost
+HOSTNAME
+
+cat <<-EOBASHRC  >> /home/vagrant/.bashrc
+  export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+  export LC_CTYPE=en_US.UTF-8
+EOBASHRC
 
 
 # update packages
@@ -177,7 +166,7 @@ chmod a+x /usr/local/bin/cadvisor
 docker pull google/cadvisor:latest
 
 # configure for systemd
-cp /vagrant/cadvisor.service  /lib/systemd/system/
+cp /tmp/cadvisor.service  /lib/systemd/system/
 sudo systemctl enable cadvisor
 
 
@@ -202,15 +191,6 @@ for item in "${DOCKER_HOST_TOOLS[@]}"; do
   chmod a+x /usr/local/bin/$item
 done
 
-
-
-# fix bug: "Failed to mount folders in Linux guest. This is usually because the "vboxsf" file system is not available."
-# @see http://qiita.com/liubin/items/f03398c4be61d21878b8
-#sudo yum -y install kernel-devel gcc
-#sudo /etc/init.d/vboxadd setup
-
-
-
 #
 # de-duplicate ID for Swarm
 # @see https://github.com/docker/swarm/issues/563
@@ -224,18 +204,12 @@ sudo docker rm `sudo docker ps --no-trunc -a -q`  || true
 sudo docker rmi -f busybox  || true
 sudo yum -y clean all
 sudo rm -f \
-  /home/vagrant/*.sh       \
-  /home/vagrant/.vbox_*    \
-  /home/vagrant/.veewee_*  \
   /var/log/messages   \
   /var/log/lastlog    \
   /var/log/auth.log   \
   /var/log/syslog     \
   /var/log/daemon.log \
-  /var/log/docker.log
-
-
-#---------------------------------------#
-# Vagrant-specific settings below
-#
-
+  /var/log/docker.log \
+  /home/vagrant/.bash_history \
+  /var/mail/vagrant           \
+  || true

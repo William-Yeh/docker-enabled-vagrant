@@ -12,6 +12,10 @@ rm -rf debian-jessie/floppy
 rm -rf debian-jessie/http
 rm -rf debian-jessie/scripts
 
+rm -rf centos7/floppy
+rm -rf centos7/http
+rm -rf centos7/scripts
+
 rm -rf insecure-registry/floppy
 rm -rf insecure-registry/http
 rm -rf insecure-registry/scripts
