@@ -1,0 +1,164 @@
+{
+  "builders": [
+    {
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 40960,
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_os_type": "RedHat_64",
+      "hard_drive_interface": "sata",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
+      "output_directory": "packer-{{user `template`}}-virtualbox",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "480"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "{{ user `template` }}"
+    },
+    {
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `ks_path`}}<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 40960,
+      "guest_os_type": "centos-64",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
+      "output_directory": "packer-{{user `template`}}-vmware",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "tools_upload_flavor": "linux",
+      "type": "vmware-iso",
+      "vm_name": "{{ user `template` }}",
+      "vmx_data": {
+        "cpuid.coresPerSocket": "1",
+        "memsize": "480",
+        "numvcpus": "1"
+      }
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "vagrant",
+        "output": "builds/{{user `box_basename`}}.{{.Provider}}.box",
+        "keep_input_artifact": false,
+        "compression_level": 9
+      },
+      {
+        "type": "atlas",
+        "artifact": "{{user `box_account`}}/{{user `box_basename`}}",
+        "artifact_type": "vagrant.box",
+        "only": ["virtualbox-iso"],
+        "metadata": {
+          "provider": "virtualbox",
+          "version": "{{user `box_version`}}.{{user `build_timestamp`}}"
+        }
+      },
+      {
+        "type": "atlas",
+        "artifact": "{{user `box_account`}}/{{user `box_basename`}}",
+        "artifact_type": "vagrant.box",
+        "only": ["vmware-iso"],
+        "metadata": {
+          "provider": "vmware_desktop",
+          "version": "{{user `box_version`}}.{{user `build_timestamp`}}"
+        }
+      }
+    ]
+  ],
+  "provisioners": [
+    {
+      "destination": "/tmp/bento-metadata.json",
+      "source": "{{user `metadata`}}",
+      "type": "file"
+    },
+    {
+      "type": "file",
+      "source": "cadvisor.service",
+      "destination": "/tmp/cadvisor.service"
+    },
+    {
+      "type": "shell",
+      "environment_vars": [
+        "HOME_DIR=/home/vagrant",
+        "http_proxy={{user `http_proxy`}}",
+        "https_proxy={{user `https_proxy`}}",
+        "no_proxy={{user `no_proxy`}}"
+      ],
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash -eux '{{.Path}}'",
+      "scripts": [
+        "scripts/common/metadata.sh",
+        "scripts/common/sshd.sh",
+        "scripts/centos/networking.sh",
+        "scripts/common/vagrant.sh",
+        "vagrant-provision.sh",
+        "vmtools.sh",
+        "fix-vbox.sh",
+        "scripts/centos/cleanup.sh",
+        "scripts/common/minimize.sh"
+      ]
+    }
+  ],
+  "push": {
+    "name": "{{user `box_account`}}/{{user `box_basename`}}",
+    "include": [
+      "floppy/**",
+      "http/centos-7.1/**",
+      "scripts/common/**",
+      "scripts/centos/**",
+      "**"
+    ]
+  },
+  "variables": {
+    "adapted_from": "https://github.com/chef/bento/blob/master/centos-7.1-x86_64.json",
+    "box_account":  "{{env `ATLAS_USERNAME`}}",
+    "box_basename": "centos7-docker",
+    "box_version":  "1.8.1",
+    "build_timestamp": "{{isotime \"20060102\"}}",
+    "git_revision": "__unknown_git_revision__",
+    "headless": "",
+    "http_proxy": "{{env `http_proxy`}}",
+    "https_proxy": "{{env `https_proxy`}}",
+    "iso_checksum": "85bcf62462fb678adc0cec159bf8b39ab5515404bc3828c432f743a1b0b30157",
+    "iso_checksum_type": "sha256",
+    "iso_name": "CentOS-7-x86_64-DVD-1503-01.iso",
+    "ks_path": "centos-7.1/ks.cfg",
+    "metadata": "floppy/dummy_metadata.json",
+    "mirror": "http://mirrors.kernel.org/centos",
+    "mirror_directory": "7.1.1503/isos/x86_64",
+    "name": "centos-7.1",
+    "no_proxy": "{{env `no_proxy`}}",
+    "template": "centos-7.1-x86_64",
+    "version": "2.1.TIMESTAMP"
+  }
+}
