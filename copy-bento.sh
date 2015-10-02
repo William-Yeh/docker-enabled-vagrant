@@ -16,3 +16,7 @@ cp -r bento/scripts   centos7
 cp -r bento/floppy    insecure-registry
 cp -r bento/http      insecure-registry
 cp -r bento/scripts   insecure-registry
+
+cp -r bento/floppy    k8s
+cp -r bento/http      k8s
+cp -r bento/scripts   k8s

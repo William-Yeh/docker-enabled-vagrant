@@ -19,3 +19,7 @@ rm -rf centos7/scripts
 rm -rf insecure-registry/floppy
 rm -rf insecure-registry/http
 rm -rf insecure-registry/scripts
+
+rm -rf k8s/floppy
+rm -rf k8s/http
+rm -rf k8s/scripts

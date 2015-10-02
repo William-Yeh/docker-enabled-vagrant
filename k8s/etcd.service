@@ -1,0 +1,15 @@
+[Unit]
+Description=etcd Server
+After=network.target
+
+[Service]
+Type=simple
+# etc logs to the journal directly, suppress double logging
+StandardOutput=null
+#WorkingDirectory=/var/lib/etcd
+ExecStartPre=/bin/sh -c "mkdir -p /var/lib/etcd"
+#User=etcd
+ExecStart=/usr/local/bin/etcd --bind-addr=0.0.0.0:4001 --data-dir=/var/lib/etcd
+
+[Install]
+WantedBy=multi-user.target

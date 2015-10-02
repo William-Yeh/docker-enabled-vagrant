@@ -20,13 +20,11 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
   - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry 2.x](https://github.com/docker/distribution)
 
-  - [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes), basically `williamyeh/ubuntu-trusty64-docker` + Kubernetes *(UNDER CONSTRUCTION)*
-
-
 - Debian 8 ("Jessie") x64:
 
-  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian-8.1.0-amd64](http://cdimage.debian.org/cdimage/release/8.1.0/amd64/) + Docker
+  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian-8.2.0-amd64](http://cdimage.debian.org/cdimage/release/8.2.0/amd64/) + Docker
 
+  - [`williamyeh/k8s`](https://atlas.hashicorp.com/williamyeh/boxes/k8s), basically `williamyeh/debian-jessie64-docker` + Kubernetes
 
 - CentOS 7 x64:
 
@@ -66,17 +64,12 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - [Docker Registry 2.x](https://github.com/docker/distribution) (only provided in [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry) box)
 
-- [Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes) (only provided in [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes) box) *(UNDER CONSTRUCTION)*
+- [Kubernetes](http://kubernetes.io/) (only provided in [`williamyeh/k8s`](https://atlas.hashicorp.com/williamyeh/boxes/k8s) box)
 
 
 ## Build these boxes yourself
 
 Here are steps you can follow to build these boxes on your own.
-
-
-### Packer version
-
-**NOTE: for all boxes except [`williamyeh/ubuntu-trusty64-kubernetes`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-kubernetes).**
 
 
 First, install the [Packer](https://www.packer.io/) tool on your host machine.
@@ -133,45 +126,6 @@ Or, you can *delegate the building and hosting tasks* to [Atlas](https://atlas.h
 #   ATLAS_USERNAME
 packer push ubuntu-trusty64-docker.json
 ```
-
-
-### Non-Packer version
-
-First, install the [`vagrant-vbguest`](https://github.com/dotless-de/vagrant-vbguest) plugin on your host machine to make sure that the proper version of the host's *VirtualBox Guest Additions* be injected onto the guest system:
-
-```
-vagrant plugin install vagrant-vbguest
-```
-
-
-Second, generate the Vagrant box file of your choice:
-
-
-```
-# change working directory to any specific OS;
-# for example, "ubuntu-trusty-kubernetes"
-cd ubuntu-trusty-kubernetes
-
-# build it!
-./build.sh
-
-# if successful, you'll get an 'XXX.box' file
-ls -al
-```
-
-
-Then, you can use the generated box file as follows:
-
-```
-# give it a local name (e.g., "my-k8s")
-vagrant box add  --name my-k8s  XXX.box
-
-# now you'll see the box installed locally
-vagrant box list
-
-```
-
-For live demo, see [Building a Docker-enabled Vagrant box for Debian jessie x86_64](https://asciinema.org/a/10603).
 
 
 ## Alternatives
