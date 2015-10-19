@@ -181,7 +181,7 @@
     "adapted_from": "https://github.com/chef/bento/blob/master/ubuntu-14.04-amd64.json",
     "box_account":  "{{env `ATLAS_USERNAME`}}",
     "box_basename": "ubuntu-trusty64-docker",
-    "box_version":  "1.8.2",
+    "box_version":  "1.8.3",
     "build_timestamp": "{{isotime \"20060102\"}}",
     "git_revision": "__unknown_git_revision__",
     "headless": "",
