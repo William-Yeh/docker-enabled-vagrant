@@ -12,19 +12,19 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.4.0
-readonly MACHINE_VERSION=v0.4.0
+readonly COMPOSE_VERSION=1.5.0
+readonly MACHINE_VERSION=v0.5.0
 
 readonly DOCKVIZ_VERSION=v0.2.1
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
-readonly DOCKERGEN_VERSION=0.4.0
+readonly DOCKERGEN_VERSION=0.4.3
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
-readonly DOCKERIZE_VERSION=v0.0.2
+readonly DOCKERIZE_VERSION=v0.0.4
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.16.0
+readonly CADVISOR_VERSION=0.19.3
 readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
 
 
@@ -63,7 +63,7 @@ sudo touch /var/lib/cloud/instance/locale-check.skip  || true
 
 # update packages
 #sudo apt-get update
-sudo apt-get install -y curl
+sudo apt-get install -y curl unzip
 #sudo apt-get -y -q upgrade
 #sudo apt-get -y -q dist-upgrade
 
@@ -121,9 +121,11 @@ sudo mv docker-compose /usr/local/bin
 
 # install Docker Machine
 # @see https://docs.docker.com/machine/
-curl -o docker-machine -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64
-chmod a+x docker-machine
-sudo mv docker-machine /usr/local/bin
+curl -o docker-machine.zip -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64.zip
+unzip docker-machine.zip
+rm docker-machine.zip
+chmod a+x docker-machine*
+sudo mv docker-machine* /usr/local/bin
 
 
 # install dockviz

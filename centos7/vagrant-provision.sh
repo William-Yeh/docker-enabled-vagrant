@@ -11,19 +11,19 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.4.0
-readonly MACHINE_VERSION=v0.4.1
+readonly COMPOSE_VERSION=1.5.0
+readonly MACHINE_VERSION=v0.5.0
 
 readonly DOCKVIZ_VERSION=v0.2.2
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
-readonly DOCKERGEN_VERSION=0.4.1
+readonly DOCKERGEN_VERSION=0.4.3
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
-readonly DOCKERIZE_VERSION=v0.0.2
+readonly DOCKERIZE_VERSION=v0.0.4
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.16.0
+readonly CADVISOR_VERSION=0.19.3
 readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
 
 
@@ -58,6 +58,7 @@ EOBASHRC
 
 # update packages
 sudo yum -y update
+sudo yum -y install curl unzip
 #sudo yum -y -q upgrade
 
 
@@ -73,7 +74,9 @@ curl -sL https://get.docker.io/ | sudo sh
 sudo usermod -aG docker vagrant
 
 # configure for docker
-sed -i -e "s/^# INSECURE_REGISTRY=.*$/INSECURE_REGISTRY='--insecure-registry registry.com'/"  /etc/sysconfig/docker
+# override!
+cp -f /tmp/docker.service  /usr/lib/systemd/system/docker.service
+
 
 # enabled when booting
 sudo systemctl enable docker
@@ -103,9 +106,11 @@ sudo mv docker-compose /usr/local/bin
 
 # install Docker Machine
 # @see https://docs.docker.com/machine/
-curl -o docker-machine -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64
-chmod a+x docker-machine
-sudo mv docker-machine /usr/local/bin
+curl -o docker-machine.zip -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64.zip
+unzip docker-machine.zip
+rm docker-machine.zip
+chmod a+x docker-machine*
+sudo mv docker-machine* /usr/local/bin
 
 
 # install dockviz

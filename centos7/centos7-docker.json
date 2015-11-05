@@ -26,7 +26,7 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "480"
+          "512"
         ],
         [
           "modifyvm",
@@ -104,6 +104,11 @@
     },
     {
       "type": "file",
+      "source": "docker.service",
+      "destination": "/tmp/docker.service"
+    },
+    {
+      "type": "file",
       "source": "cadvisor.service",
       "destination": "/tmp/cadvisor.service"
     },
@@ -143,7 +148,7 @@
     "adapted_from": "https://github.com/chef/bento/blob/master/centos-7.1-x86_64.json",
     "box_account":  "{{env `ATLAS_USERNAME`}}",
     "box_basename": "centos7-docker",
-    "box_version":  "1.8.3",
+    "box_version":  "1.9.0",
     "build_timestamp": "{{isotime \"20060102\"}}",
     "git_revision": "__unknown_git_revision__",
     "headless": "",
