@@ -12,10 +12,10 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.5.0
-readonly MACHINE_VERSION=v0.5.0
+readonly COMPOSE_VERSION=1.5.1
+readonly MACHINE_VERSION=v0.5.1
 
-readonly DOCKVIZ_VERSION=v0.2.1
+readonly DOCKVIZ_VERSION=v0.3
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
 readonly DOCKERGEN_VERSION=0.4.3

@@ -15,18 +15,18 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly ETCD_VERSION=v2.2.0
+readonly ETCD_VERSION=v2.2.2
 readonly ETCD_VERSION_TAG=etcd-$ETCD_VERSION-linux-amd64
 readonly ETCD_TARBALL_URL=https://github.com/coreos/etcd/releases/download/$ETCD_VERSION/$ETCD_VERSION_TAG.tar.gz
 
-readonly KUBERNETES_VERSION=v1.0.6
+readonly KUBERNETES_VERSION=v1.1.2
 readonly KUBERNETES_TARBALL_URL=https://github.com/GoogleCloudPlatform/kubernetes/releases/download/$KUBERNETES_VERSION/kubernetes.tar.gz
 
 
-readonly COMPOSE_VERSION=1.5.0
-readonly MACHINE_VERSION=v0.5.0
+readonly COMPOSE_VERSION=1.5.1
+readonly MACHINE_VERSION=v0.5.1
 
-readonly DOCKVIZ_VERSION=v0.2.2
+readonly DOCKVIZ_VERSION=v0.3
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
 readonly DOCKERGEN_VERSION=0.4.3
@@ -139,7 +139,7 @@ sudo systemctl enable etcd
 # install kubernetes
 #
 
-K8S_EXE_LIST=("hyperkube" "kube-apiserver" "kube-controller-manager" "kubectl" "kubelet" "kube-proxy" "kubernetes" "kube-scheduler")
+K8S_EXE_LIST=("hyperkube" "kube-apiserver" "kube-controller-manager" "kubectl" "kubelet" "kube-proxy" "kube-scheduler" "linkcheck")
 
 curl -sSL  $KUBERNETES_TARBALL_URL  -o k8s.tar.gz
 tar zxvf k8s.tar.gz
