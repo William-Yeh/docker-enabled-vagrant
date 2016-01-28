@@ -170,7 +170,7 @@ cp /tmp/cadvisor.manifest  /etc/kubernetes/manifests/
 
 
 
-# install Docker Compose (was: Fig)
+# install Docker Compose
 # @see http://docs.docker.com/compose/install/
 curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`
 chmod a+x docker-compose

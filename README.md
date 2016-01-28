@@ -4,7 +4,7 @@ Docker-enabled Vagrant boxes
 
 ## Purpose
 
-Some Linux distributions don't have a pre-installed [Docker](http://www.docker.com) engine. Public Vagrant boxes (e.g., those in [Vagrant Cloud](https://vagrantcloud.com/) and [Vagrantbox.es](http://www.vagrantbox.es/)) also lack quality support for Docker. So I build these Vagrant boxes to aid my Docker development.
+Some Linux distributions don't have a pre-installed [Docker](http://www.docker.com) engine. Public Vagrant boxes (e.g., those in [Atlas](https://atlas.hashicorp.com/boxes/search) and [Vagrantbox.es](http://www.vagrantbox.es/)) also lack quality support for Docker. So I build these Vagrant boxes to aid my Docker development.
 
 I also install some handy tools for Docker.
 
@@ -22,13 +22,13 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - Debian 8 ("Jessie") x64:
 
-  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian-8.2.0-amd64](http://cdimage.debian.org/cdimage/release/8.2.0/amd64/) + Docker
+  - [`williamyeh/debian-jessie64-docker`](https://vagrantcloud.com/williamyeh/debian-jessie64-docker), basically [debian-8.3.0-amd64](http://cdimage.debian.org/cdimage/release/8.3.0/amd64/) + Docker
 
   - [`williamyeh/k8s`](https://atlas.hashicorp.com/williamyeh/boxes/k8s), basically `williamyeh/debian-jessie64-docker` + Kubernetes
 
 - CentOS 7 x64:
 
-  - [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/), basically [CentOS 7.1](http://mirrors.kernel.org/centos/7.1.1503/) + Docker
+  - [`williamyeh/centos7-docker`](https://atlas.hashicorp.com/williamyeh/boxes/centos7-docker/), basically [CentOS 7.2](http://mirrors.kernel.org/centos/7.2.1511/) + Docker
 
 
 
@@ -40,7 +40,7 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - Docker CLI
 
-- [Docker Compose](https://github.com/docker/compose) (was: Fig): Fast, isolated development environments using Docker.
+- [Docker Compose](https://github.com/docker/compose): Fast, isolated development environments using Docker.
 
 - [Docker Swarm](https://github.com/docker/swarm): a Docker-native clustering system.
 
@@ -156,4 +156,4 @@ Some nice alternatives you may try:
 
 Licensed under [MIT license](http://creativecommons.org/licenses/MIT/).
 
-Copyright © 2014-2015 William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).
+Copyright © 2014-2016 William Yeh - [https://github.com/William-Yeh](https://github.com/William-Yeh).

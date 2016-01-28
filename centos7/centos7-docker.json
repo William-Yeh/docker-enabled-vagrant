@@ -138,14 +138,14 @@
     "name": "{{user `box_account`}}/{{user `box_basename`}}",
     "include": [
       "floppy/**",
-      "http/centos-7.1/**",
+      "http/centos-7.2/**",
       "scripts/common/**",
       "scripts/centos/**",
       "**"
     ]
   },
   "variables": {
-    "adapted_from": "https://github.com/chef/bento/blob/master/centos-7.1-x86_64.json",
+    "adapted_from": "https://github.com/chef/bento/blob/master/centos-7.2-x86_64.json",
     "box_account":  "{{env `ATLAS_USERNAME`}}",
     "box_basename": "centos7-docker",
     "box_version":  "1.9.1",
@@ -154,16 +154,16 @@
     "headless": "",
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",
-    "iso_checksum": "85bcf62462fb678adc0cec159bf8b39ab5515404bc3828c432f743a1b0b30157",
+    "iso_checksum": "907e5755f824c5848b9c8efbb484f3cd945e93faa024bad6ba875226f9683b16",
     "iso_checksum_type": "sha256",
-    "iso_name": "CentOS-7-x86_64-DVD-1503-01.iso",
-    "ks_path": "centos-7.1/ks.cfg",
+    "iso_name": "CentOS-7-x86_64-DVD-1511.iso",
+    "ks_path": "centos-7.2/ks.cfg",
     "metadata": "floppy/dummy_metadata.json",
     "mirror": "http://mirrors.kernel.org/centos",
-    "mirror_directory": "7.1.1503/isos/x86_64",
-    "name": "centos-7.1",
+    "mirror_directory": "7.2.1511/isos/x86_64",
+    "name": "centos-7.2",
     "no_proxy": "{{env `no_proxy`}}",
-    "template": "centos-7.1-x86_64",
+    "template": "centos-7.2-x86_64",
     "version": "2.1.TIMESTAMP"
   }
 }
