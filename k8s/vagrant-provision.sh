@@ -2,7 +2,7 @@
 #
 # provision script; install Docker engine, Kubernetes & some handy tools.
 #
-# [NOTE] run by Vagrant; never run on host OS. 
+# [NOTE] run by Vagrant; never run on host OS.
 #
 # @see https://docs.docker.com/installation/debian/
 # @see https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/getting-started-guides/locally.md
@@ -15,24 +15,24 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly ETCD_VERSION=v2.2.2
+readonly ETCD_VERSION=v2.2.5
 readonly ETCD_VERSION_TAG=etcd-$ETCD_VERSION-linux-amd64
 readonly ETCD_TARBALL_URL=https://github.com/coreos/etcd/releases/download/$ETCD_VERSION/$ETCD_VERSION_TAG.tar.gz
 
-readonly KUBERNETES_VERSION=v1.1.2
+readonly KUBERNETES_VERSION=v1.1.7
 readonly KUBERNETES_TARBALL_URL=https://github.com/GoogleCloudPlatform/kubernetes/releases/download/$KUBERNETES_VERSION/kubernetes.tar.gz
 
 
-readonly COMPOSE_VERSION=1.5.1
-readonly MACHINE_VERSION=v0.5.1
+readonly COMPOSE_VERSION=1.6.0
+readonly MACHINE_VERSION=v0.6.0
 
 readonly DOCKVIZ_VERSION=v0.3
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
-readonly DOCKERGEN_VERSION=0.4.3
+readonly DOCKERGEN_VERSION=0.6.0
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
-readonly DOCKERIZE_VERSION=v0.0.4
+readonly DOCKERIZE_VERSION=v0.2.0
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 
@@ -159,7 +159,7 @@ sudo chmod a+x /opt/*.sh
 # install cAdvisor for kubelet
 # @see http://www.dasblinkenlichten.com/installing-cadvisor-and-heapster-on-bare-metal-kubernetes/
 #
-# also: workaround hyperkube bug 
+# also: workaround hyperkube bug
 # @see https://github.com/kubernetes/kubernetes/issues/8424
 #
 
@@ -179,11 +179,9 @@ sudo mv docker-compose /usr/local/bin
 
 # install Docker Machine
 # @see https://docs.docker.com/machine/
-curl -o docker-machine.zip -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine_linux-amd64.zip
-unzip docker-machine.zip
-rm docker-machine.zip
-chmod a+x docker-machine*
-sudo mv docker-machine* /usr/local/bin
+curl -o docker-machine -L https://github.com/docker/machine/releases/download/$MACHINE_VERSION/docker-machine-`uname -s`-`uname -m`
+chmod a+x docker-machine
+sudo mv docker-machine /usr/local/bin
 
 
 # install dockviz
