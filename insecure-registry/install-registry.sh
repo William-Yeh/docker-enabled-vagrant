@@ -13,7 +13,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly REGISTRY_VERSION=2.2.0
+readonly REGISTRY_VERSION=2.3.1
 #readonly REGISTRY_VERSION=latest
 readonly REGISTRY_IMAGE=registry:$REGISTRY_VERSION
 

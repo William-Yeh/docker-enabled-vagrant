@@ -16,7 +16,7 @@ Use the following public box names (all available from [Atlas](https://atlas.has
 
 - Ubuntu 14.04.x LTS ("Trusty") x64:
 
-  - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker), basically [ubuntu-14.04.3-server-amd64](http://releases.ubuntu.com/14.04/) + Docker
+  - [`williamyeh/ubuntu-trusty64-docker`](https://vagrantcloud.com/williamyeh/ubuntu-trusty64-docker), basically [ubuntu-14.04.4-server-amd64](http://releases.ubuntu.com/14.04/) + Docker
 
   - [`williamyeh/insecure-registry`](https://vagrantcloud.com/williamyeh/insecure-registry), basically `williamyeh/ubuntu-trusty64-docker` + [Docker Registry 2.x](https://github.com/docker/distribution)
 
@@ -135,19 +135,19 @@ Some nice alternatives you may try:
 
 - Ubuntu 14.04 LTS ("Trusty") x64:
 
-  - [`3scale/docker`](https://vagrantcloud.com/3scale/docker)
+  - [`box-cutter/ubuntu1404-docker`](https://atlas.hashicorp.com/box-cutter/boxes/ubuntu1404-docker) supports parallels, virtualbox, and vmware_desktop providers.
 
 
-- CentOS 6.x x64:
+- CentOS 7.x x64:
 
-  - [`jdiprizio/centos-docker-io`](https://vagrantcloud.com/jdiprizio/centos-docker-io)
+  - [`box-cutter/centos72-docker`](https://atlas.hashicorp.com/box-cutter/boxes/centos72-docker) supports parallels, virtualbox, and vmware_desktop providers.
 
 
 - CoreOS x64:
 
-  - [`yungsang/coreos` (stable)](https://atlas.hashicorp.com/yungsang/boxes/coreos)
-  - [`yungsang/coreos-beta`](https://atlas.hashicorp.com/yungsang/boxes/coreos-beta)
-  - [`yungsang/coreos-alpha`](https://atlas.hashicorp.com/yungsang/boxes/coreos-alpha)
+  - [`AntonioMeireles/coreos-stable`](https://atlas.hashicorp.com/AntonioMeireles/boxes/coreos-stable)
+  - [`AntonioMeireles/coreos-beta`](https://atlas.hashicorp.com/AntonioMeireles/boxes/coreos-beta)
+  - [`AntonioMeireles/coreos-alpha`](https://atlas.hashicorp.com/AntonioMeireles/boxes/coreos-alpha)
 
 
 
