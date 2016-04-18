@@ -148,7 +148,7 @@
     "adapted_from": "https://github.com/chef/bento/blob/master/centos-7.2-x86_64.json",
     "box_account":  "{{env `ATLAS_USERNAME`}}",
     "box_basename": "centos7-docker",
-    "box_version":  "1.10.3",
+    "box_version":  "1.11.0",
     "build_timestamp": "{{isotime \"20060102\"}}",
     "git_revision": "__unknown_git_revision__",
     "headless": "",
