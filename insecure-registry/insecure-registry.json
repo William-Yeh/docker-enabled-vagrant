@@ -182,7 +182,7 @@
     "adapted_from": "https://github.com/chef/bento/blob/master/ubuntu-14.04-amd64.json",
     "box_account":  "{{env `ATLAS_USERNAME`}}",
     "box_basename": "insecure-registry",
-    "box_version":  "2.3.1",
+    "box_version":  "2.4.0",
     "build_timestamp": "{{isotime \"20060102\"}}",
     "git_revision": "__unknown_git_revision__",
     "headless": "",

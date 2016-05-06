@@ -15,21 +15,21 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly ETCD_VERSION=v2.2.5
+readonly ETCD_VERSION=v2.3.3
 readonly ETCD_VERSION_TAG=etcd-$ETCD_VERSION-linux-amd64
 readonly ETCD_TARBALL_URL=https://github.com/coreos/etcd/releases/download/$ETCD_VERSION/$ETCD_VERSION_TAG.tar.gz
 
-readonly KUBERNETES_VERSION=v1.1.8
+readonly KUBERNETES_VERSION=v1.2.3
 readonly KUBERNETES_TARBALL_URL=https://github.com/GoogleCloudPlatform/kubernetes/releases/download/$KUBERNETES_VERSION/kubernetes.tar.gz
 
 
-readonly COMPOSE_VERSION=1.6.2
-readonly MACHINE_VERSION=v0.6.0
+readonly COMPOSE_VERSION=1.7.1
+readonly MACHINE_VERSION=v0.7.0
 
-readonly DOCKVIZ_VERSION=v0.3
+readonly DOCKVIZ_VERSION=v0.4
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
 
-readonly DOCKERGEN_VERSION=0.7.0
+readonly DOCKERGEN_VERSION=0.7.1
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 
 readonly DOCKERIZE_VERSION=v0.2.0
