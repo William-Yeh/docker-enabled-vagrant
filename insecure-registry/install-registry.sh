@@ -13,8 +13,8 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly REGISTRY_VERSION=2.4.0
-#readonly REGISTRY_VERSION=latest
+readonly REGISTRY_VERSION=latest
+#readonly REGISTRY_VERSION=2.5.0
 readonly REGISTRY_IMAGE=registry:$REGISTRY_VERSION
 
 readonly REGISTRY_CONFIG_DIR=/opt/docker-registry
