@@ -13,7 +13,7 @@ export LANGUAGE=en_US.UTF-8
 
 
 readonly COMPOSE_VERSION=1.8.0
-readonly MACHINE_VERSION=v0.8.0
+readonly MACHINE_VERSION=v0.8.1
 
 readonly DOCKVIZ_VERSION=v0.4.2
 readonly DOCKVIZ_EXE_URL=https://github.com/justone/dockviz/releases/download/$DOCKVIZ_VERSION/dockviz_linux_amd64
@@ -24,7 +24,7 @@ readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 readonly DOCKERIZE_VERSION=v0.2.0
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.23.4
+readonly CADVISOR_VERSION=0.23.8
 readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
 
 
