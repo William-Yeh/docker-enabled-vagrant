@@ -90,7 +90,7 @@ sudo systemctl start  docker
 
 # enable memory and swap accounting
 sed -i -e \
-  's/^GRUB_CMDLINE_LINUX=.+/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' \
+  's/^GRUB_CMDLINE_LINUX=.\+/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"/' \
   /etc/default/grub
 sudo update-grub
 
