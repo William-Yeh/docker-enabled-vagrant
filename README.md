@@ -79,6 +79,7 @@ Second, pull the [Bento](https://github.com/chef/bento) submodule:
 ```
 # pull the Bento project
 git submodule init
+git submodule update
 
 # copy Bento stuff to sub-directories
 # since Packer doesn't push soft links to Atlas (defects!)...
